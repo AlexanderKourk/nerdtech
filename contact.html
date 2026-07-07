@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233b82f6'/%3E%3Cstop offset='100%25' style='stop-color:%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%231e293b'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='5' fill='url(%23g)'/%3E%3Cline x1='32' y1='18' x2='32' y2='8' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='32' y1='46' x2='32' y2='56' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='18' y1='32' x2='8' y2='32' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='46' y1='32' x2='56' y2='32' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Crect x='13' y='13' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='45' y='13' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='13' y='45' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='45' y='45' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --input-bg: #1e293b;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 1.5rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .box {
+            width: 100%;
+            max-width: 520px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        h1 { margin-bottom: 1rem; }
+        label {
+            display: block;
+            margin: 0.75rem 0 0.35rem;
+            font-weight: 600;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font: inherit;
+            background: var(--input-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        input::placeholder, textarea::placeholder {
+            color: var(--text-muted);
+        }
+        .phone-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .phone-group select {
+            width: 120px;
+            flex-shrink: 0;
+        }
+        .phone-group input {
+            flex: 1;
+        }
+        .phone-error, .email-error, .name-error {
+            display: none;
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        button, a {
+            display: inline-block;
+            margin-top: 1rem;
+            text-decoration: none;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            transition: background-color 0.3s;
+        }
+        button:hover, a.btn:hover {
+            background: var(--primary-hover);
+        }
+        .back {
+            background: transparent;
+            color: var(--primary);
+            padding-left: 0;
+        }
+        .back:hover {
+            background: transparent;
+            opacity: 0.8;
+        }
+        .success-message {
+            display: none;
+            color: #16a34a;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 0.5rem;
+        }
+        .error-message {
+            display: none;
+            color: #dc2626;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1 data-en="Contact Us" data-el="Επικοινωνήστε Μαζί Μας">Contact Us</h1>
+        <form id="contactForm" action="https://formspree.io/f/xqevnrrp" method="POST">
+            <label for="name" data-en="Full Name" data-el="Ονοματεπώνυμο">Full Name</label>
+            <input id="name" type="text" name="name" data-en-placeholder="Your full name" data-el-placeholder="Το ονοματεπώνυμό σας" placeholder="Your full name" pattern="[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώπσςφγηξκλθχψωβνεμρτυοιαε\s]+" required>
+            <div class="name-error" id="nameError" data-en="Name must contain only letters and spaces" data-el="Το όνομα πρέπει να περιέχει μόνο γράμματα και κενά">Name must contain only letters and spaces</div>
+
+            <label for="phone" data-en="Phone Number" data-el="Αριθμός Τηλεφώνου">Phone Number</label>
+            <div class="phone-group">
+                <select id="countryCode" name="countryCode" required>
+                    <option value="+30">🇬🇷 +30</option>
+                    <option value="+1">🇺🇸 +1</option>
+                    <option value="+44">🇬🇧 +44</option>
+                    <option value="+49">🇩🇪 +49</option>
+                    <option value="+33">🇫🇷 +33</option>
+                    <option value="+39">🇮🇹 +39</option>
+                    <option value="+34">🇪🇸 +34</option>
+                    <option value="+31">🇳🇱 +31</option>
+                    <option value="+32">🇧🇪 +32</option>
+                    <option value="+43">🇦🇹 +43</option>
+                    <option value="+41">🇨🇭 +41</option>
+                    <option value="+46">🇸🇪 +46</option>
+                    <option value="+47">🇳🇴 +47</option>
+                    <option value="+45">🇩🇰 +45</option>
+                    <option value="+358">🇫🇮 +358</option>
+                    <option value="+48">🇵🇱 +48</option>
+                    <option value="+40">🇷🇴 +40</option>
+                    <option value="+359">🇧🇬 +359</option>
+                    <option value="+90">🇹🇷 +90</option>
+                    <option value="+357">🇨🇾 +357</option>
+                    <option value="+61">🇦🇺 +61</option>
+                    <option value="+81">🇯🇵 +81</option>
+                    <option value="+86">🇨🇳 +86</option>
+                </select>
+                <input id="phone" type="tel" name="phone" data-en-placeholder="Your phone number" data-el-placeholder="Ο αριθμός τηλεφώνου σας" placeholder="Your phone number" pattern="\d{10}" maxlength="10" required>
+            </div>
+            <div class="phone-error" id="phoneError" data-en="Phone number must be exactly 10 digits" data-el="Ο αριθμός τηλεφώνου πρέπει να είναι ακριβώς 10 ψηφία">Phone number must be exactly 10 digits</div>
+
+            <label for="email" data-en="Email" data-el="Email">Email</label>
+            <input id="email" type="email" name="email" data-en-placeholder="Your email" data-el-placeholder="Το email σας" placeholder="Your email" required>
+            <div class="email-error" id="emailError" data-en="Please enter a valid email (e.g., user@example.com)" data-el="Παρακαλώ εισάγετε ένα έγκυρο email (π.χ., user@example.com)">Please enter a valid email (e.g., user@example.com)</div>
+
+            <label for="service" data-en="Service Interested In" data-el="Υπηρεσία που σας ενδιαφέρει">Service Interested In</label>
+            <select id="service" name="service" required>
+                <option value="" disabled selected data-en="-- Select a Service --" data-el="-- Επιλέξτε Υπηρεσία --">-- Select a Service --</option>
+                <option value="Computer Formatting" data-en="🖥️🔧 Computer Formatting" data-el="🖥️🔧 Format Υπολογιστή">🖥️🔧 Computer Formatting</option>
+                <option value="Data Backup Creation" data-en="💾 Data Backup Creation" data-el="💾 Δημιουργία Αντιγράφου Δεδομένων">💾 Data Backup Creation</option>
+                <option value="Software/Application Installation" data-en="📱 Software/Application Installation" data-el="📱 Εγκατάσταση Λογισμικού/Εφαρμογών">📱 Software/Application Installation</option>
+                <option value="Building a Computer from Scratch" data-en="🖥 Building a Computer from Scratch" data-el="🖥 Στήσιμο Υπολογιστή από το 0">🖥 Building a Computer from Scratch</option>
+                <option value="Expression of Interest" data-en="📋 Expression of Interest" data-el="📋 Εκδήλωση Ενδιαφέροντος">📋 Expression of Interest</option>
+            </select>
+
+            <label for="message" data-en="Message" data-el="Μήνυμα">Message</label>
+            <textarea id="message" name="message" data-en-placeholder="Your message" data-el-placeholder="Το μήνυμά σας" placeholder="Your message" required></textarea>
+
+            <button type="submit" data-en="Send Message" data-el="Αποστολή Μηνύματος">Send Message</button>
+        </form>
+        <div class="success-message" id="successMsg" data-en="Message sent successfully! We'll get back to you soon." data-el="Το μήνυμα στάλθηκε με επιτυχία! Θα επικοινωνήσουμε σύντομα μαζί σας.">Message sent successfully! We'll get back to you soon.</div>
+        <div class="error-message" id="errorMsg" data-en="Failed to send message. Please try again." data-el="Αποτυχία αποστολής μηνύματος. Παρακαλώ δοκιμάστε ξανά.">Failed to send message. Please try again.</div>
+        <a class="back" href="index.html" data-en="← Back to Home" data-el="← Πίσω στην Αρχική">← Back to Home</a>
+    </div>
+
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const successMsg = document.getElementById('successMsg');
+        const errorMsg = document.getElementById('errorMsg');
+        const nameInput = document.getElementById('name');
+        const nameError = document.getElementById('nameError');
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phoneError');
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        const serviceSelect = document.getElementById('service');
+
+        function applyTheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        function applyLanguage() {
+            translatePage(localStorage.getItem('lang') || 'en');
+        }
+
+        applyTheme();
+        applyLanguage();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applyTheme();
+            }
+            if (e.key === 'lang') {
+                applyLanguage();
+            }
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function isValidName(name) {
+            const nameRegex = /^[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώπσςφγηξκλθχψωβνεμρτυοιαε\s]+$/;
+            return nameRegex.test(name);
+        }
+
+        nameInput.addEventListener('input', (e) => {
+            const sanitizedValue = e.target.value.replace(/[^A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώπσςφγηξκλθχψωβνεμρτυοιαε\s]/g, '');
+            if (e.target.value !== sanitizedValue) {
+                e.target.value = sanitizedValue;
+            }
+            if (e.target.value.length > 0 && !isValidName(e.target.value)) {
+                nameError.style.display = 'block';
+            } else {
+                nameError.style.display = 'none';
+            }
+        });
+
+        phoneInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+            if (e.target.value.length > 0 && e.target.value.length !== 10) {
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value.length > 0 && !isValidEmail(emailInput.value)) {
+                emailError.style.display = 'block';
+            } else {
+                emailError.style.display = 'none';
+            }
+        });
+
+        emailInput.addEventListener('blur', () => {
+            if (emailInput.value.length > 0 && !isValidEmail(emailInput.value)) {
+                emailError.style.display = 'block';
+            } else {
+                emailError.style.display = 'none';
+            }
+        });
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!isValidName(nameInput.value)) {
+                nameError.style.display = 'block';
+                return;
+            }
+            
+            if (phoneInput.value.length !== 10) {
+                phoneError.style.display = 'block';
+                return;
+            }
+
+            if (!isValidEmail(emailInput.value)) {
+                emailError.style.display = 'block';
+                return;
+            }
+
+            if (!serviceSelect.value) {
+                alert('Please select a service you are interested in.');
+                return;
+            }
+            
+            const formData = new FormData(contactForm);
+            const fullPhone = formData.get('countryCode') + formData.get('phone');
+            formData.set('phone', fullPhone);
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    successMsg.style.display = 'block';
+                    errorMsg.style.display = 'none';
+                    contactForm.reset();
+                    nameError.style.display = 'none';
+                    phoneError.style.display = 'none';
+                    emailError.style.display = 'none';
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                successMsg.style.display = 'none';
+                errorMsg.style.display = 'block';
+            }
+        });
+
+        function translatePage(lang) {
+            document.documentElement.lang = lang === 'el' ? 'el' : 'en';
+            document.querySelectorAll('[data-en]:not(select option)').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+                el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
+            });
+            document.querySelectorAll('select option[data-en]').forEach(option => {
+                option.textContent = option.getAttribute(`data-${lang}`);
+            });
+        }
+    </script>
+</body>
+</html>

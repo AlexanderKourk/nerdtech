@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NerdTech Homepage</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233b82f6'/%3E%3Cstop offset='100%25' style='stop-color:%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%231e293b'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='5' fill='url(%23g)'/%3E%3Cline x1='32' y1='18' x2='32' y2='8' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='32' y1='46' x2='32' y2='56' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='18' y1='32' x2='8' y2='32' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='46' y1='32' x2='56' y2='32' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Crect x='13' y='13' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='45' y='13' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='13' y='45' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='45' y='45' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --border-color: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border-color);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo:hover { opacity: 0.8; }
+
+        .nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav a:hover { color: var(--primary); }
+
+        .theme-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .theme-btn:hover { background: var(--border-color); }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hero { text-align: center; }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cards-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        .top-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background-color 0.3s;
+        }
+
+        .top-btn.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .top-btn:hover { background: var(--primary-hover); }
+
+        .cookie-notice {
+            position: fixed;
+            left: 50%;
+            bottom: 1rem;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-50%) translateY(10px);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+        }
+
+        .cookie-notice.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cookie-notice-text {
+            color: var(--text-color);
+        }
+
+        .cookie-notice-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+        }
+
+        .cookie-notice-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .cookie-notice-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.25rem;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .cookie-notice-close:hover {
+            color: var(--text-color);
+        }
+
+        .cookie-float-btn {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            width: 48px;
+            height: 48px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            z-index: 9998;
+            color: var(--text-color);
+        }
+
+        .cookie-float-btn.visible {
+            display: flex;
+        }
+
+        .cookie-float-btn:hover {
+            background: var(--border-color);
+        }
+
+        .cookie-banner {
+            position: fixed;
+            left: 50%;
+            bottom: 1rem;
+            transform: translateX(-50%);
+            width: min(900px, calc(100% - 2rem));
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+            display: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .cookie-banner.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .cookie-banner h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cookie-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .cookie-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cookie-option:last-child {
+            border-bottom: none;
+        }
+
+        .cookie-option-info {
+            flex: 1;
+        }
+
+        .cookie-option-info strong {
+            display: block;
+            margin-bottom: 0.15rem;
+        }
+
+        .cookie-option-info small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .cookie-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .cookie-btn {
+            border: none;
+            border-radius: 0.375rem;
+            padding: 0.7rem 1rem;
+            font: inherit;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .cookie-accept {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .cookie-reject {
+            background: var(--border-color);
+            color: var(--text-color);
+        }
+
+        .cookie-save {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            header { justify-content: center; text-align: center; }
+            .hero h1 { font-size: 2.25rem; }
+            .nav { justify-content: center; }
+            .cookie-option {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .cookie-notice {
+                width: calc(100% - 2rem);
+                text-align: center;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo">NerdTech</a>
+        <nav class="nav">
+            <a href="pricing.html" data-en="Pricing" data-el="Τιμολόγηση">Pricing</a>
+            <a href="contact.html" data-en="Contact" data-el="Επικοινωνία">Contact</a>
+        </nav>
+        <div class="theme-group">
+            <button class="theme-btn" id="themeToggleBtn" title="Toggle theme" data-en-light="🌙 Dark" data-el-light="🌙 Σκοτεινό" data-en-dark="☀️ Light" data-el-dark="☀️ Φωτεινό"></button>
+            <button class="theme-btn" id="langToggleBtn" title="Toggle language" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English"></button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <h1 data-en="IT Services" data-el="Υπηρεσίες Πληροφορικής">IT Services</h1>
+            <p data-en="The services offered are as follows:" data-el="Οι υπηρεσίες που προσφέρονται είναι οι εξής:"></p>
+        </section>
+
+        <section class="cards-section">
+            <div class="card">
+                <div class="card-icon">🖥️🔧</div>
+                <h3 data-en="Computer Formatting" data-el="Format Υπολογιστή">Computer Formatting</h3>
+                <p data-en="It means deleting all data and reinstalling the operating system from scratch" data-el="Σημαίνει διαγραφή όλων των δεδομένων και επανεγκατάσταση του λειτουργικού συστήματος από την αρχή">It means deleting all data and reinstalling the operating system from scratch</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💾</div>
+                <h3 data-en="Data Backup Creation" data-el="Δημιουργία Αντιγράφου Δεδομένων">Data Backup Creation</h3>
+                <p data-en="It means creating backups, which protects your files from loss" data-el="Σημαίνει δημιουργία αντιγράφων ασφαλείας (backup), η οποία προστατεύει τα αρχεία σας από απώλεια">It means creating backups, which protects your files from loss</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3 data-en="Software/Application Installation" data-el="Εγκατάσταση Λογισμικού/Εφαρμογών">Software/Application Installation</h3>
+                <p data-en="It is carried out by downloading an executable file (.exe) from official websites and following the installation wizard" data-el="Πραγματοποιείται με τη λήψη ενός εκτελέσιμου αρχείου (.exe) από επίσημες ιστοσελίδες και ακολουθώντας τον οδηγό εγκατάστασης">It is carried out by downloading an executable file (.exe) from official websites and following the installation wizard</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🖥</div>
+                <h3 data-en="Building a Computer from Scratch" data-el="Στήσιμο Υπολογιστή από το 0">Building a Computer from Scratch</h3>
+                <p data-en="Building a computer from scratch involves two main stages: selecting and physically assembling the components, and installing the operating system" data-el="Το στήσιμο ενός υπολογιστή από το μηδέν περιλαμβάνει δύο βασικά στάδια: την επιλογή και φυσική συναρμολόγηση των εξαρτημάτων, και την εγκατάσταση του λειτουργικού συστήματος">Building a computer from scratch involves two main stages: selecting and physically assembling the components, and installing the operating system</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"></div>
+                <h3 data-en="New services will be added soon. Stay tuned..." data-el="Καινούργιες υπηρεσίες θα προστεθούν σύντομα. Μείνετε συντονισμένοι...">New services will be added soon. Stay tuned...</h3>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <p data-en="&copy; 2026 NerdTech" data-el="&copy; 2026 NerdTech">&copy; 2026 NerdTech</p>
+    </footer>
+
+    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+
+    <div class="cookie-notice" id="cookieNotice">
+        <span class="cookie-notice-text" data-en="🍪 Adjust your cookie preferences here" data-el="🍪 Προσαρμόστε τις προτιμήσεις cookies εδώ">🍪 Adjust your cookie preferences here</span>
+        <button class="cookie-notice-btn" id="cookieNoticeBtn" data-en="Open Settings" data-el="Άνοιγμα Ρυθμίσεων">Open Settings</button>
+        <button class="cookie-notice-close" id="cookieNoticeClose" title="Close">✕</button>
+    </div>
+
+    <button class="cookie-float-btn" id="cookieFloatBtn" title="Cookie settings">🍪</button>
+
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+        <h2 data-en="Cookie Preferences" data-el="Προτιμήσεις Cookies">Cookie Preferences</h2>
+        <p data-en="We use cookies to enhance your browsing experience. Choose which cookies you allow:" data-el="Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία περιήγησής σας. Επιλέξτε ποια cookies επιτρέπετε:" style="margin-bottom: 1rem; color: var(--text-muted);">We use cookies to enhance your browsing experience. Choose which cookies you allow:</p>
+        <div class="cookie-options">
+            <div class="cookie-option">
+                <div class="cookie-option-info">
+                    <strong data-en="Essential Cookies" data-el="Απαραίτητα Cookies">Essential Cookies</strong>
+                    <small data-en="Required for the website to function properly." data-el="Απαιτούνται για τη σωστή λειτουργία του ιστότοπου.">Required for the website to function properly.</small>
+                </div>
+                <input type="checkbox" id="essentialCookies" checked disabled>
+            </div>
+            <div class="cookie-option">
+                <div class="cookie-option-info">
+                    <strong data-en="Functional Cookies" data-el="Λειτουργικά Cookies">Functional Cookies</strong>
+                    <small data-en="Remember your preferences like theme and language." data-el="Απομνημονεύουν τις προτιμήσεις σας όπως θέμα και γλώσσα.">Remember your preferences like theme and language.</small>
+                </div>
+                <input type="checkbox" id="functionalCookies" checked>
+            </div>
+            <div class="cookie-option">
+                <div class="cookie-option-info">
+                    <strong data-en="Analytics Cookies" data-el="Cookies Ανάλυσης">Analytics Cookies</strong>
+                    <small data-en="Help us understand how visitors use our website." data-el="Μας βοηθούν να κατανοήσουμε πώς χρησιμοποιούν οι επισκέπτες τον ιστότοπό μας.">Help us understand how visitors use our website.</small>
+                </div>
+                <input type="checkbox" id="analyticsCookies">
+            </div>
+            <div class="cookie-option">
+                <div class="cookie-option-info">
+                    <strong data-en="Marketing Cookies" data-el="Cookies Marketing">Marketing Cookies</strong>
+                    <small data-en="Used to deliver relevant advertisements." data-el="Χρησιμοποιούνται για την προβολή σχετικών διαφημίσεων.">Used to deliver relevant advertisements.</small>
+                </div>
+                <input type="checkbox" id="marketingCookies">
+            </div>
+        </div>
+        <div class="cookie-actions">
+            <button class="cookie-btn cookie-accept" id="acceptAllCookies" data-en="Accept All" data-el="Αποδοχή Όλων">Accept All</button>
+            <button class="cookie-btn cookie-reject" id="rejectAllCookies" data-en="Reject All" data-el="Απόρριψη Όλων">Reject All</button>
+            <button class="cookie-btn cookie-save" id="saveCookies" data-en="Save Preferences" data-el="Αποθήκευση Προτιμήσεων">Save Preferences</button>
+        </div>
+    </div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        const topBtn = document.getElementById('topBtn');
+        const cookieBanner = document.getElementById('cookieBanner');
+        const cookieFloatBtn = document.getElementById('cookieFloatBtn');
+        const cookieNotice = document.getElementById('cookieNotice');
+        const cookieNoticeBtn = document.getElementById('cookieNoticeBtn');
+        const cookieNoticeClose = document.getElementById('cookieNoticeClose');
+        const acceptAllCookies = document.getElementById('acceptAllCookies');
+        const rejectAllCookies = document.getElementById('rejectAllCookies');
+        const saveCookies = document.getElementById('saveCookies');
+        const functionalCookies = document.getElementById('functionalCookies');
+        const analyticsCookies = document.getElementById('analyticsCookies');
+        const marketingCookies = document.getElementById('marketingCookies');
+
+        const COOKIE_NAME = 'cookieConsent';
+
+        let cookieChoices = {
+            functional: true,
+            analytics: false,
+            marketing: false
+        };
+
+        function updateThemeButton() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const currentLang = document.documentElement.lang || 'en';
+            const themeKey = currentTheme === 'dark' ? 'dark' : 'light';
+            themeToggleBtn.textContent = themeToggleBtn.getAttribute(`data-${currentLang}-${themeKey}`);
+        }
+
+        function updateLangButton() {
+            const currentLang = document.documentElement.lang || 'en';
+            langToggleBtn.textContent = langToggleBtn.getAttribute(`data-${currentLang}`);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton();
+        });
+
+        langToggleBtn.addEventListener('click', () => {
+            const currentLang = document.documentElement.lang || 'en';
+            const newLang = currentLang === 'el' ? 'en' : 'el';
+            translatePage(newLang);
+        });
+
+        function translatePage(lang) {
+            document.documentElement.lang = lang === 'el' ? 'el' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            localStorage.setItem('lang', lang);
+            updateThemeButton();
+            updateLangButton();
+        }
+
+        function getCookie(name) {
+            const cname = name + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while(c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if(c.indexOf(cname) == 0) {
+                    return c.substring(cname.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function saveCookieChoices(choices) {
+            setCookie(COOKIE_NAME, JSON.stringify(choices), 365);
+        }
+
+        function loadCookieChoices() {
+            const consentData = getCookie(COOKIE_NAME);
+            if (consentData && consentData !== "") {
+                try {
+                    return JSON.parse(consentData);
+                } catch(e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        function showCookieBanner() {
+            cookieBanner.classList.add('visible');
+            cookieNotice.classList.remove('visible');
+            cookieFloatBtn.classList.remove('visible');
+        }
+
+        function hideCookieBanner() {
+            cookieBanner.classList.remove('visible');
+            cookieFloatBtn.classList.add('visible');
+            cookieNotice.classList.remove('visible');
+        }
+
+        function updateCheckboxes() {
+            functionalCookies.checked = cookieChoices.functional;
+            analyticsCookies.checked = cookieChoices.analytics;
+            marketingCookies.checked = cookieChoices.marketing;
+        }
+
+        function setAllCookies(value) {
+            cookieChoices.functional = value;
+            cookieChoices.analytics = value;
+            cookieChoices.marketing = value;
+            updateCheckboxes();
+        }
+
+        function handleCookieDecision(choices) {
+            saveCookieChoices(choices);
+            hideCookieBanner();
+        }
+
+        cookieNoticeBtn.addEventListener('click', () => {
+            updateCheckboxes();
+            showCookieBanner();
+        });
+
+        cookieNoticeClose.addEventListener('click', () => {
+            cookieNotice.classList.remove('visible');
+        });
+
+        cookieFloatBtn.addEventListener('click', () => {
+            updateCheckboxes();
+            showCookieBanner();
+        });
+
+        acceptAllCookies.addEventListener('click', () => {
+            setAllCookies(true);
+            handleCookieDecision(cookieChoices);
+        });
+
+        rejectAllCookies.addEventListener('click', () => {
+            setAllCookies(false);
+            handleCookieDecision(cookieChoices);
+        });
+
+        saveCookies.addEventListener('click', () => {
+            cookieChoices.functional = functionalCookies.checked;
+            cookieChoices.analytics = analyticsCookies.checked;
+            cookieChoices.marketing = marketingCookies.checked;
+            handleCookieDecision(cookieChoices);
+        });
+
+        const savedChoices = loadCookieChoices();
+        if (savedChoices) {
+            cookieChoices = savedChoices;
+            updateCheckboxes();
+            cookieFloatBtn.classList.add('visible');
+        } else {
+            cookieNotice.classList.add('visible');
+        }
+
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+        translatePage(localStorage.getItem('lang') || 'en');
+
+        window.addEventListener('scroll', () => {
+            topBtn.classList.toggle('show', window.scrollY > 300);
+        });
+    </script>
+</body>
+</html>

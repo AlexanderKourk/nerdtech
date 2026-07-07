@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233b82f6'/%3E%3Cstop offset='100%25' style='stop-color:%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%231e293b'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='5' fill='url(%23g)'/%3E%3Cline x1='32' y1='18' x2='32' y2='8' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='32' y1='46' x2='32' y2='56' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='18' y1='32' x2='8' y2='32' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='46' y1='32' x2='56' y2='32' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3Crect x='13' y='13' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='45' y='13' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='13' y='45' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3Crect x='45' y='45' width='6' height='6' rx='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --border-color: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 1.5rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header, main, footer { max-width: 900px; margin: 0 auto; }
+        header a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        header a:hover {
+            opacity: 0.8;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        h1 { margin-bottom: 1rem; }
+        p { margin-bottom: 1rem; line-height: 1.7; color: var(--text-muted); }
+        footer {
+            margin-top: 2rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .top-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background-color 0.3s;
+        }
+        .top-btn.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .top-btn:hover { background: var(--primary-hover); }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" data-en="← Back to Home" data-el="← Πίσω στην Αρχική">← Back to Home</a>
+    </header>
+
+    <main>
+        <h1 data-en="Pricing" data-el="Τιμολόγηση">Pricing</h1>
+        <p data-en="For a home visit, the client is charged an additional 30 €" data-el="Για κατοίκον επίσκεψη, ο πελάτης επιβαρύνεται επιπλέον 30 €">For a home visit, the client is charged an additional 30 €</p>
+        <section class="cards-section">
+            <div class="card">
+                <div class="card-icon">🖥️🔧</div>
+                <h3 data-en="Computer Formatting" data-el="Format Υπολογιστή">Computer Formatting</h3>
+                <p data-en="Prices range from 30 to 60 €" data-el="Οι τιμές κιμαίνονται από 30 μέχρι 60 €">Prices range from 30 to 60 €</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💾</div>
+                <h3 data-en="Data Backup Creation" data-el="Δημιουργία Αντιγράφου Δεδομένων">Data Backup Creation</h3>
+                <p data-en="Prices range from 20 to 35 €" data-el="Οι τιμές κυμαίνονται από 20 μέχρι 35 €">Prices range from 20 to 35 €</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3 data-en="Software/Application Installation" data-el="Εγκατάσταση Λογισμικού/Εφαρμογών">Software/Application Installation</h3>
+                <p data-en="Prices range from €30 to 55 €. Additional charges may apply depending on the type of software/application (Activation)." data-el="Οι τιμές κυμαίνονται από 30 μέχρι 55 €. Μπορεί να υπάρξουν επιπλέον χρεώσεις ανάλογα με το είδος του λογισμικού/εφαρμογής(Ενεργοποίηση)">Prices range from €30 to 55 €. Additional charges may apply depending on the type of software/application (Activation)</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🖥</div>
+                <h3 data-en="Building a Computer from Scratch" data-el="Στήσιμο Υπολογιστή από το 0">Building a Computer from Scratch</h3>
+                <p data-en="The cost is calculated in consultation with the client, as the type and cost of the material need to be determined" data-el="Το κόστος υπολογίζεται σε συνεννόηση με τον πελάτη διότι πρέπει να προσδιοριστεί το είδος και το κόστος του υλικού">The cost is calculated in consultation with the client, as the type and cost of the material need to be determined</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p data-en="&copy; 2026 NerdTech" data-el="&copy; 2026 NerdTech">&copy; 2026 NerdTech</p>
+    </footer>
+
+    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+
+    <script>
+        const topBtn = document.getElementById('topBtn');
+
+        function applyTheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        function applyLanguage() {
+            translatePage(localStorage.getItem('lang') || 'en');
+        }
+
+        applyTheme();
+        applyLanguage();
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                applyTheme();
+            }
+            if (e.key === 'lang') {
+                applyLanguage();
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            topBtn.classList.toggle('show', window.scrollY > 300);
+        });
+
+        function translatePage(lang) {
+            document.documentElement.lang = lang === 'el' ? 'el' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            localStorage.setItem('lang', lang);
+        }
+    </script>
+</body>
+</html>

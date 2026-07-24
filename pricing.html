@@ -14,6 +14,10 @@
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --border-color: #e2e8f0;
+            --font-size-multiplier: 1;
+            --letter-spacing: normal;
+            --line-height: 1.6;
+            --focus-outline: 3px solid #3b82f6;
         }
 
         [data-theme="dark"] {
@@ -24,41 +28,83 @@
             --border-color: #334155;
         }
 
+        [data-high-contrast="true"] {
+            --bg-color: #000000 !important;
+            --card-bg: #000000 !important;
+            --text-color: #ffffff !important;
+            --text-muted: #ffff00 !important;
+            --primary: #00ffff !important;
+            --primary-hover: #00cccc !important;
+            --border-color: #ffffff !important;
+            --focus-outline: 4px solid #ffff00 !important;
+        }
+
+        [data-high-contrast="true"] [data-theme="dark"] {
+            --bg-color: #000000 !important;
+            --card-bg: #000000 !important;
+            --text-color: #ffffff !important;
+            --text-muted: #ffff00 !important;
+            --primary: #00ffff !important;
+            --primary-hover: #00cccc !important;
+            --border-color: #ffffff !important;
+        }
+
+        [data-font-size="large"] { --font-size-multiplier: 1.25; }
+        [data-font-size="xlarge"] { --font-size-multiplier: 1.5; }
+
+        [data-reduced-motion="true"] * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
         body {
             font-family: system-ui, sans-serif;
-            margin: 0;
+            font-size: calc(1rem * var(--font-size-multiplier));
+            letter-spacing: var(--letter-spacing);
+            line-height: var(--line-height);
             min-height: 100vh;
             background: var(--bg-color);
             color: var(--text-color);
             padding: 1.5rem;
-            transition: background-color 0.3s, color 0.3s;
         }
+
+        :focus-visible {
+            outline: var(--focus-outline);
+            outline-offset: 2px;
+        }
+
         header, main, footer { max-width: 900px; margin: 0 auto; }
         header a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.3s;
         }
-        header a:hover {
-            opacity: 0.8;
-        }
+        header a:hover { opacity: 0.8; }
+
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 0.75rem;
             padding: 2rem;
             margin-top: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: background-color 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
         h1 { margin-bottom: 1rem; }
         p { margin-bottom: 1rem; line-height: 1.7; color: var(--text-muted); }
-        footer {
-            margin-top: 2rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
+
+        footer { margin-top: 2rem; color: var(--text-muted); text-align: center; }
+
+        .card-icon { font-size: calc(2.5rem * var(--font-size-multiplier)); margin-bottom: 1rem; }
+        .card h3 { margin-bottom: 0.75rem; font-size: calc(1.25rem * var(--font-size-multiplier)); }
+        .card p { font-size: calc(0.95rem * var(--font-size-multiplier)); color: var(--text-muted); }
+
         .top-btn {
             position: fixed;
             right: 20px;
@@ -70,18 +116,25 @@
             border-radius: 999px;
             cursor: pointer;
             font-weight: 600;
+            font-size: calc(1rem * var(--font-size-multiplier));
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
             transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background-color 0.3s;
         }
+
         .top-btn.show {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
         }
+
         .top-btn:hover { background: var(--primary-hover); }
+
+        @media (max-width: 768px) {
+            .card { padding: 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -92,53 +145,111 @@
     <main>
         <h1 data-en="Pricing" data-el="Τιμολόγηση">Pricing</h1>
         <p data-en="For a home visit, the client is charged an additional 30 €" data-el="Για κατοίκον επίσκεψη, ο πελάτης επιβαρύνεται επιπλέον 30 €">For a home visit, the client is charged an additional 30 €</p>
-        <p data-en="Some of our services are also offered remotely. Ask us for more information" data-el="Ορισμένες από τις υπηρεσίες μας, προσφέρονται και εξ' αποστάσεως. Ρωτήστε μας για περισσότερες πληροφορίες" >Some of our services are also offered remotely. Ask us for more information</p>
-        <section class="cards-section">
-            <div class="card">
-                <div class="card-icon">🖥️</div>
-                <h3 data-en="Computer Formatting" data-el="Format Υπολογιστή">Computer Formatting</h3>
-                <p data-en="The cost ranges from 30 to 60 €" data-el="Το κόστος κιμαίνεται από 30 μέχρι 60 €">The cost ranges from 30 to 60 €</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">💾</div>
-                <h3 data-en="Data Backup Creation" data-el="Δημιουργία Αντιγράφου Δεδομένων">Data Backup Creation</h3>
-                <p data-en="The cost ranges from 20 to 35 €" data-el="Το κόστος κυμαίνεται από 20 μέχρι 35 €">The cost ranges from 20 to 35 €</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📱</div>
-                <h3 data-en="Software/Application Installation" data-el="Εγκατάσταση Λογισμικού/Εφαρμογών">Software/Application Installation</h3>
-                <p data-en="The cost ranges from €30 to 55 €. Additional charges may apply depending on the type of software/application (Activation)." data-el="Το κόστος κυμαίνεται από 30 μέχρι 55 €. Μπορεί να υπάρξουν επιπλέον χρεώσεις ανάλογα με το είδος του λογισμικού/εφαρμογής(Ενεργοποίηση)">The cost ranges from €30 to 55 €. Additional charges may apply depending on the type of software/application (Activation)</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🖥</div>
-                <h3 data-en="Building a Computer from Scratch" data-el="Στήσιμο Υπολογιστή από το 0">Building a Computer from Scratch</h3>
-                <p data-en="The cost is calculated in consultation with the client, as the type and cost of the material need to be determined" data-el="Το κόστος υπολογίζεται σε συνεννόηση με τον πελάτη διότι πρέπει να προσδιοριστεί το είδος και το κόστος του υλικού">The cost is calculated in consultation with the client, as the type and cost of the material need to be determined</p>
-            </div>
-             <div class="card">
-                <div class="card-icon">🔒</div>
-                <h3 data-en="Activation of Office/Windows" data-el="Ενεργοποίηση Office/Windows">Activation of Office/Windows</h3>
-                <p data-en="The cost is calculated based on the purchase price of the key and the type of activation" data-el="Το κόστος υπολογίζεται με βάση την τιμή αγοράς του κλειδιού και το είδος της ενεργοποίησης">The cost is calculated based on the purchase price of the key and the type of activation</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📝</div>
-                <h3 data-en="System Compatibility Recommendations" data-el="Προτάσεις Συμβατότητας Συστημάτων">System Compatibility Recommendations</h3>
-                <p data-en="The cost ranges from 15 to 30 €" data-el= "Το κόστος κυμαίνεται από 15 μέχρι 30 €">The cost ranges from 15 to 30 €</p>
-            </div>
-        </section>
+        <p data-en="Some of our services are also offered remotely. Ask us for more information" data-el="Ορισμένες από τις υπηρεσίες μας, προσφέρονται και εξ' αποστάσεως. Ρωτήστε μας για περισσότερες πληροφορίες">Some of our services are also offered remotely. Ask us for more information</p>
+
+        <div class="card">
+            <div class="card-icon">🖥️</div>
+            <h3 data-en="Computer Formatting" data-el="Format Υπολογιστή">Computer Formatting</h3>
+            <p data-en="The cost ranges from 30 to 60 €" data-el="Το κόστος κιμαίνεται από 30 μέχρι 60 €">The cost ranges from 30 to 60 €</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">💾</div>
+            <h3 data-en="Data Backup Creation" data-el="Δημιουργία Αντιγράφου Δεδομένων">Data Backup Creation</h3>
+            <p data-en="The cost ranges from 20 to 35 €" data-el="Το κόστος κυμαίνεται από 20 μέχρι 35 €">The cost ranges from 20 to 35 €</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📱</div>
+            <h3 data-en="Software/Application Installation" data-el="Εγκατάσταση Λογισμικού/Εφαρμογών">Software/Application Installation</h3>
+            <p data-en="The cost ranges from €30 to 55 €. Additional charges may apply depending on the type of software/application (Activation)." data-el="Το κόστος κυμαίνεται από 30 μέχρι 55 €. Μπορεί να υπάρξουν επιπλέον χρεώσεις ανάλογα με το είδος του λογισμικού/εφαρμογής(Ενεργοποίηση)">The cost ranges from €30 to 55 €. Additional charges may apply depending on the type of software/application (Activation)</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🖥</div>
+            <h3 data-en="Building a Computer from Scratch" data-el="Στήσιμο Υπολογιστή από το 0">Building a Computer from Scratch</h3>
+            <p data-en="The cost is calculated in consultation with the client, as the type and cost of the material need to be determined" data-el="Το κόστος υπολογίζεται σε συνεννόηση με τον πελάτη διότι πρέπει να προσδιοριστεί το είδος και το κόστος του υλικού">The cost is calculated in consultation with the client, as the type and cost of the material need to be determined</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔒</div>
+            <h3 data-en="Activation of Office/Windows" data-el="Ενεργοποίηση Office/Windows">Activation of Office/Windows</h3>
+            <p data-en="The cost is calculated based on the purchase price of the key and the type of activation" data-el="Το κόστος υπολογίζεται με βάση την τιμή αγοράς του κλειδιού και το είδος της ενεργοποίησης">The cost is calculated based on the purchase price of the key and the type of activation</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📝</div>
+            <h3 data-en="System Compatibility Recommendations" data-el="Προτάσεις Συμβατότητας Συστημάτων">System Compatibility Recommendations</h3>
+            <p data-en="The cost ranges from 15 to 30 €" data-el="Το κόστος κυμαίνεται από 15 μέχρι 30 €">The cost ranges from 15 to 30 €</p>
+        </div>
     </main>
 
     <footer>
         <p data-en="&copy; 2026 NerdTech" data-el="&copy; 2026 NerdTech">&copy; 2026 NerdTech</p>
     </footer>
 
-    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" data-en="Top" data-el="Κορυφή" data-en-title="Scroll to top" data-el-title="Μετάβαση στην κορυφή" title="Scroll to top" aria-label="Scroll to top">Top</button>
 
     <script>
+        const A11Y_KEY = 'a11ySettings';
         const topBtn = document.getElementById('topBtn');
 
+        const defaultA11y = {
+            fontSize: 'normal',
+            highContrast: false,
+            letterSpacing: false,
+            readableFont: false,
+            reducedMotion: false,
+            underlineLinks: false,
+            largeCursor: false
+        };
+
+        let a11ySettings = { ...defaultA11y };
+
+        function loadA11ySettings() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(A11Y_KEY));
+                if (saved) a11ySettings = { ...defaultA11y, ...saved };
+            } catch(e) {}
+            applyAllA11y();
+        }
+
+        function applyAllA11y() {
+            document.documentElement.setAttribute('data-font-size', a11ySettings.fontSize);
+            document.documentElement.setAttribute('data-high-contrast', a11ySettings.highContrast);
+            document.documentElement.setAttribute('data-reduced-motion', a11ySettings.reducedMotion);
+            document.documentElement.style.setProperty('--letter-spacing', a11ySettings.letterSpacing ? '0.12em' : 'normal');
+            document.documentElement.style.setProperty('--line-height', a11ySettings.letterSpacing ? '2' : '1.6');
+
+            if (a11ySettings.readableFont) {
+                document.body.style.fontFamily = "'Atkinson Hyperlegible', 'Lexend', 'Andika', Arial, sans-serif";
+            } else {
+                document.body.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+            }
+
+            document.querySelectorAll('a').forEach(a => {
+                a.style.textDecoration = a11ySettings.underlineLinks ? 'underline' : '';
+            });
+
+            if (a11ySettings.largeCursor) {
+                document.body.style.cursor = "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2215%22 fill=%22white%22 stroke=%22black%22 stroke-width=%222%22/%3E%3C/svg%3E') 16 16, auto";
+            } else {
+                document.body.style.cursor = 'auto';
+            }
+        }
+
         function applyTheme() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+        }
+
+        function translatePage(lang) {
+            document.documentElement.lang = lang === 'el' ? 'el' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            localStorage.setItem('lang', lang);
+            updateTopButtonTitle();
+        }
+
+        function updateTopButtonTitle() {
+            const lang = document.documentElement.lang || 'en';
+            topBtn.title = topBtn.getAttribute(`data-${lang}-title`);
+            topBtn.setAttribute('aria-label', topBtn.getAttribute(`data-${lang}-title`));
         }
 
         function applyLanguage() {
@@ -147,27 +258,17 @@
 
         applyTheme();
         applyLanguage();
+        loadA11ySettings();
 
         window.addEventListener('storage', (e) => {
-            if (e.key === 'theme') {
-                applyTheme();
-            }
-            if (e.key === 'lang') {
-                applyLanguage();
-            }
+            if (e.key === 'theme') applyTheme();
+            if (e.key === 'lang') applyLanguage();
+            if (e.key === A11Y_KEY) loadA11ySettings();
         });
 
         window.addEventListener('scroll', () => {
             topBtn.classList.toggle('show', window.scrollY > 300);
         });
-
-        function translatePage(lang) {
-            document.documentElement.lang = lang === 'el' ? 'el' : 'en';
-            document.querySelectorAll('[data-en]').forEach(el => {
-                el.textContent = el.getAttribute(`data-${lang}`);
-            });
-            localStorage.setItem('lang', lang);
-        }
     </script>
 </body>
 </html>

@@ -14,6 +14,10 @@
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --border-color: #e2e8f0;
+            --font-size-multiplier: 1;
+            --letter-spacing: normal;
+            --line-height: 1.6;
+            --focus-outline: 3px solid #3b82f6;
         }
 
         [data-theme="dark"] {
@@ -22,6 +26,40 @@
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
+        }
+
+        [data-high-contrast="true"] {
+            --bg-color: #000000 !important;
+            --card-bg: #000000 !important;
+            --text-color: #ffffff !important;
+            --text-muted: #ffff00 !important;
+            --primary: #00ffff !important;
+            --primary-hover: #00cccc !important;
+            --border-color: #ffffff !important;
+            --focus-outline: 4px solid #ffff00 !important;
+        }
+
+        [data-high-contrast="true"] [data-theme="dark"] {
+            --bg-color: #000000 !important;
+            --card-bg: #000000 !important;
+            --text-color: #ffffff !important;
+            --text-muted: #ffff00 !important;
+            --primary: #00ffff !important;
+            --primary-hover: #00cccc !important;
+            --border-color: #ffffff !important;
+        }
+
+        [data-font-size="large"] {
+            --font-size-multiplier: 1.25;
+        }
+
+        [data-font-size="xlarge"] {
+            --font-size-multiplier: 1.5;
+        }
+
+        [data-reduced-motion="true"] * {
+            animation: none !important;
+            transition: none !important;
         }
 
         * {
@@ -35,9 +73,16 @@
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: calc(1rem * var(--font-size-multiplier));
+            letter-spacing: var(--letter-spacing);
+            line-height: var(--line-height);
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.6;
+        }
+
+        :focus-visible {
+            outline: var(--focus-outline);
+            outline-offset: 2px;
         }
 
         header {
@@ -53,7 +98,7 @@
         }
 
         .logo {
-            font-size: 1.25rem;
+            font-size: calc(1.25rem * var(--font-size-multiplier));
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
@@ -72,9 +117,17 @@
             color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
+            font-size: calc(1rem * var(--font-size-multiplier));
         }
 
         .nav a:hover { color: var(--primary); }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
 
         .theme-group {
             display: flex;
@@ -82,18 +135,129 @@
             flex-wrap: wrap;
         }
 
-        .theme-btn {
+        .theme-btn, .a11y-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.75rem;
             border-radius: 0.375rem;
             cursor: pointer;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+            white-space: nowrap;
         }
 
-        .theme-btn:hover { background: var(--border-color); }
+        .theme-btn:hover, .a11y-btn:hover { background: var(--border-color); }
+        .a11y-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .a11y-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            z-index: 10000;
+            width: min(400px, 90vw);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .a11y-panel.visible { display: block; }
+
+        .a11y-panel h3 {
+            margin-bottom: 1rem;
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .a11y-panel .a11y-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .a11y-panel .a11y-option:last-child { border-bottom: none; }
+
+        .a11y-panel button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+        }
+
+        .a11y-panel select {
+            padding: 0.4rem;
+            border-radius: 0.375rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+        }
+
+        .a11y-panel .close-panel {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
+
+        .overlay.visible { display: block; }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .tts-indicator {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            z-index: 9998;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tts-indicator.speaking {
+            display: flex;
+        }
 
         main {
             max-width: 1200px;
@@ -104,14 +268,14 @@
         .hero { text-align: center; }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: calc(3rem * var(--font-size-multiplier));
             font-weight: 800;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: calc(1.25rem * var(--font-size-multiplier));
             color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto 2rem;
@@ -140,25 +304,25 @@
         }
 
         .card-icon {
-            font-size: 2.5rem;
+            font-size: calc(2.5rem * var(--font-size-multiplier));
             margin-bottom: 1rem;
         }
 
         .card h3 {
             margin-bottom: 0.75rem;
-            font-size: 1.25rem;
+            font-size: calc(1.25rem * var(--font-size-multiplier));
         }
 
         .card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: calc(0.95rem * var(--font-size-multiplier));
         }
 
         footer {
             text-align: center;
             padding: 3rem 2rem;
             color: var(--text-muted);
-            font-size: 0.875rem;
+            font-size: calc(0.875rem * var(--font-size-multiplier));
             border-top: 1px solid var(--border-color);
             margin-top: 4rem;
         }
@@ -174,6 +338,7 @@
             border-radius: 999px;
             cursor: pointer;
             font-weight: 600;
+            font-size: calc(1rem * var(--font-size-multiplier));
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
             opacity: 0;
             visibility: hidden;
@@ -189,6 +354,27 @@
 
         .top-btn:hover { background: var(--primary-hover); }
 
+        .a11y-float-btn {
+            position: fixed;
+            left: 20px;
+            bottom: 80px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 999px;
+            width: 48px;
+            height: 48px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            z-index: 9998;
+            color: var(--text-color);
+        }
+
+        .a11y-float-btn:hover { background: var(--border-color); }
+
         .cookie-notice {
             position: fixed;
             left: 50%;
@@ -203,7 +389,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 0.9rem;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
             opacity: 0;
             visibility: hidden;
             transform: translateX(-50%) translateY(10px);
@@ -229,27 +415,24 @@
             cursor: pointer;
             font-weight: 600;
             white-space: nowrap;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
             transition: background-color 0.3s;
         }
 
-        .cookie-notice-btn:hover {
-            background: var(--primary-hover);
-        }
+        .cookie-notice-btn:hover { background: var(--primary-hover); }
 
         .cookie-notice-close {
             background: none;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: calc(1.2rem * var(--font-size-multiplier));
             padding: 0.25rem;
             line-height: 1;
             transition: color 0.3s;
         }
 
-        .cookie-notice-close:hover {
-            color: var(--text-color);
-        }
+        .cookie-notice-close:hover { color: var(--text-color); }
 
         .cookie-float-btn {
             position: fixed;
@@ -270,13 +453,9 @@
             color: var(--text-color);
         }
 
-        .cookie-float-btn.visible {
-            display: flex;
-        }
+        .cookie-float-btn.visible { display: flex; }
 
-        .cookie-float-btn:hover {
-            background: var(--border-color);
-        }
+        .cookie-float-btn:hover { background: var(--border-color); }
 
         .cookie-banner {
             position: fixed;
@@ -302,7 +481,7 @@
         }
 
         .cookie-banner h2 {
-            font-size: 1.1rem;
+            font-size: calc(1.1rem * var(--font-size-multiplier));
             margin-bottom: 0.75rem;
         }
 
@@ -322,13 +501,9 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .cookie-option:last-child {
-            border-bottom: none;
-        }
+        .cookie-option:last-child { border-bottom: none; }
 
-        .cookie-option-info {
-            flex: 1;
-        }
+        .cookie-option-info { flex: 1; }
 
         .cookie-option-info strong {
             display: block;
@@ -337,7 +512,7 @@
 
         .cookie-option-info small {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: calc(0.8rem * var(--font-size-multiplier));
         }
 
         .cookie-option input[type="checkbox"] {
@@ -361,26 +536,16 @@
             font: inherit;
             cursor: pointer;
             font-weight: 600;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
         }
 
-        .cookie-accept {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .cookie-reject {
-            background: var(--border-color);
-            color: var(--text-color);
-        }
-
-        .cookie-save {
-            background: var(--primary);
-            color: #fff;
-        }
+        .cookie-accept { background: var(--primary); color: #fff; }
+        .cookie-reject { background: var(--border-color); color: var(--text-color); }
+        .cookie-save { background: var(--primary); color: #fff; }
 
         @media (max-width: 768px) {
             header { justify-content: center; text-align: center; }
-            .hero h1 { font-size: 2.25rem; }
+            .hero h1 { font-size: calc(2.25rem * var(--font-size-multiplier)); }
             .nav { justify-content: center; }
             .cookie-option {
                 flex-direction: column;
@@ -398,70 +563,131 @@
 <body>
 
     <header>
-        <a href="#home" class="logo">NerdTech</a>
-        <nav class="nav">
+        <a href="#home" class="logo" aria-label="NerdTech Home">NerdTech</a>
+        <nav class="nav" aria-label="Main navigation">
             <a href="pricing.html" data-en="Pricing" data-el="Τιμολόγηση">Pricing</a>
             <a href="contact.html" data-en="Contact Us" data-el="Επικοινωνήστε μαζί μας">Contact Us</a>
         </nav>
-        <div class="theme-group">
-            <button class="theme-btn" id="themeToggleBtn" title="Toggle theme" data-en-light="🌙 Dark" data-el-light="🌙 Σκοτεινό" data-en-dark="☀️ Light" data-el-dark="☀️ Φωτεινό"></button>
-            <button class="theme-btn" id="langToggleBtn" title="Toggle language" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English"></button>
-        </div>
+        <div class="toolbar">
+            <div class="theme-group">
+                <button class="theme-btn" id="themeToggleBtn" title="Toggle theme" data-en-light="🌙 Dark" data-el-light="🌙 Σκοτεινό" data-en-dark="☀️ Light" data-el-dark="☀️ Φωτεινό" aria-label="Toggle dark mode"></button>
+                <button class="theme-btn" id="langToggleBtn" title="Toggle language" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English" aria-label="Toggle language"></button>
+            </div>
+           </div>
     </header>
 
     <main>
-        <section class="hero" id="home">
-            <h1 data-en="IT Services" data-el="Υπηρεσίες Πληροφορικής">IT Services</h1>
+        <section class="hero" id="home" aria-labelledby="hero-heading">
+            <h1 id="hero-heading" data-en="IT Services" data-el="Υπηρεσίες Πληροφορικής">IT Services</h1>
             <p data-en="The services offered are as follows:" data-el="Οι υπηρεσίες που προσφέρονται είναι οι εξής:"></p>
         </section>
 
-        <section class="cards-section">
-            <div class="card">
-                <div class="card-icon">🖥️</div>
+        <section class="cards-section" aria-label="Services list">
+            <div class="card" tabindex="0">
+                <div class="card-icon" aria-hidden="true">🖥️</div>
                 <h3 data-en="Computer Formatting" data-el="Format Υπολογιστή">Computer Formatting</h3>
                 <p data-en="It means deleting all data and reinstalling the operating system from scratch" data-el="Σημαίνει διαγραφή όλων των δεδομένων και επανεγκατάσταση του λειτουργικού συστήματος από την αρχή">It means deleting all data and reinstalling the operating system from scratch</p>
             </div>
-            <div class="card">
-                <div class="card-icon">💾</div>
+            <div class="card" tabindex="0">
+                <div class="card-icon" aria-hidden="true">💾</div>
                 <h3 data-en="Data Backup Creation" data-el="Δημιουργία Αντιγράφου Δεδομένων">Data Backup Creation</h3>
                 <p data-en="It means creating backups, which protects your files from loss" data-el="Σημαίνει δημιουργία αντιγράφων ασφαλείας (backup), η οποία προστατεύει τα αρχεία σας από απώλεια">It means creating backups, which protects your files from loss</p>
             </div>
-            <div class="card">
-                <div class="card-icon">📱</div>
+            <div class="card" tabindex="0">
+                <div class="card-icon" aria-hidden="true">📱</div>
                 <h3 data-en="Software/Application Installation" data-el="Εγκατάσταση Λογισμικού/Εφαρμογών">Software/Application Installation</h3>
                 <p data-en="It is carried out by downloading an executable file (.exe) from official websites and following the installation wizard" data-el="Πραγματοποιείται με τη λήψη ενός εκτελέσιμου αρχείου (.exe) από επίσημες ιστοσελίδες και ακολουθώντας τον οδηγό εγκατάστασης">It is carried out by downloading an executable file (.exe) from official websites and following the installation wizard</p>
             </div>
-            <div class="card">
-                <div class="card-icon">🖥</div>
+            <div class="card" tabindex="0">
+                <div class="card-icon" aria-hidden="true">🖥</div>
                 <h3 data-en="Building a Computer from Scratch" data-el="Στήσιμο Υπολογιστή από το 0">Building a Computer from Scratch</h3>
                 <p data-en="Building a computer from scratch involves two main stages: selecting and physically assembling the components, and installing the operating system" data-el="Το στήσιμο ενός υπολογιστή από το μηδέν περιλαμβάνει δύο βασικά στάδια: την επιλογή και φυσική συναρμολόγηση των εξαρτημάτων, και την εγκατάσταση του λειτουργικού συστήματος">Building a computer from scratch involves two main stages: selecting and physically assembling the components, and installing the operating system</p>
             </div>
-            <div class="card">
-                <div class="card-icon">🔒</div>
+            <div class="card" tabindex="0">
+                <div class="card-icon" aria-hidden="true">🔒</div>
                 <h3 data-en="Activation of Office/Windows" data-el="Ενεργοποίηση Office/Windows">Activation of Office/Windows</h3>
                 <p data-en="Activation is carried out by purchasing an official, genuine key from authorized sellers and resellers" data-el="Η ενεργοποίηση πραγματοποιείται με την αγορά επίσημου αυθεντικού κλειδιού από επίσημους πωλητές και μεταπωλητές">Activation is carried out by purchasing an official, genuine key from authorized sellers and resellers</p>
             </div>
-            <div class="card">
-                <div class="card-icon">📝</div>
+            <div class="card" tabindex="0">
+                <div class="card-icon" aria-hidden="true">📝</div>
                 <h3 data-en="System Compatibility Recommendations" data-el="Προτάσεις Συμβατότητας Συστημάτων">System Compatibility Recommendations</h3>
                 <p data-en="We recommend the appropriate computer system based on the client's usage and budget" data-el= "Προτείνουμε με βάση την χρήση και το budget του πελάτη το κατάλληλο σύστημα υπολογιστή">We recommend the appropriate computer system based on the client's usage and budget</p>
             </div>
         </section>
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <p data-en="&copy; 2026 NerdTech" data-el="&copy; 2026 NerdTech">&copy; 2026 NerdTech</p>
     </footer>
 
-    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Scroll to top">Top</button>
+    <button class="a11y-float-btn" id="a11yFloatBtn" aria-label="Accessibility options" title="Accessibility Options">♿</button>
+
+    <div class="overlay" id="a11yOverlay"></div>
+    <div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="Accessibility Options" aria-modal="true">
+        <button class="close-panel" id="closeA11yPanel" aria-label="Close accessibility panel">✕</button>
+        <h3 data-en="Accessibility Options" data-el="Επιλογές Προσβασιμότητας">Accessibility Options</h3>
+
+        <div class="a11y-option">
+            <span data-en="🔤 Text Size" data-el="🔤 Μέγεθος Κειμένου">🔤 Text Size</span>
+            <select id="fontSizeSelect" aria-label="Text size">
+                <option value="normal" data-en="Normal" data-el="Κανονικό">Normal</option>
+                <option value="large" data-en="Large" data-el="Μεγάλο">Large</option>
+                <option value="xlarge" data-en="Extra Large" data-el="Πολύ Μεγάλο">Extra Large</option>
+            </select>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🌈 High Contrast" data-el="🌈 Υψηλή Αντίθεση">🌈 High Contrast</span>
+            <button id="highContrastToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔤 Letter Spacing" data-el="🔤 Απόσταση Γραμμάτων">🔤 Letter Spacing</span>
+            <button id="letterSpacingToggle" data-en="Increase" data-el="Αύξηση" aria-pressed="false">Increase</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="📖 Readable Font" data-el="📖 Ευανάγνωστη Γραμματοσειρά">📖 Readable Font</span>
+            <button id="readableFontToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔇 Reduced Motion" data-el="🔇 Μείωση Κίνησης">🔇 Reduced Motion</span>
+            <button id="reducedMotionToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🗣️ Read Page Aloud" data-el="🗣️ Ανάγνωση Σελίδας">🗣️ Read Page Aloud</span>
+            <button id="ttsToggle" data-en="Start Reading" data-el="Έναρξη Ανάγνωσης" aria-pressed="false">Start Reading</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔗 Underline Links" data-el="🔗 Υπογράμμιση Συνδέσμων">🔗 Underline Links</span>
+            <button id="underlineLinksToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔲 Large Cursor" data-el="🔲 Μεγάλος Κέρσορας">🔲 Large Cursor</span>
+            <button id="largeCursorToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option" style="border-bottom:none;">
+            <button id="resetA11y" style="width:100%;" data-en="🔄 Reset All Settings" data-el="🔄 Επαναφορά Ρυθμίσεων">🔄 Reset All Settings</button>
+        </div>
+    </div>
+
+    <div class="tts-indicator" id="ttsIndicator" aria-live="polite">
+        🔊 <span data-en="Reading..." data-el="Ανάγνωση...">Reading...</span>
+    </div>
 
     <div class="cookie-notice" id="cookieNotice">
         <span class="cookie-notice-text" data-en="🍪 Adjust your cookie preferences here" data-el="🍪 Προσαρμόστε τις προτιμήσεις cookies εδώ">🍪 Adjust your cookie preferences here</span>
         <button class="cookie-notice-btn" id="cookieNoticeBtn" data-en="Open Settings" data-el="Άνοιγμα Ρυθμίσεων">Open Settings</button>
-        <button class="cookie-notice-close" id="cookieNoticeClose" title="Close">✕</button>
+        <button class="cookie-notice-close" id="cookieNoticeClose" title="Close" aria-label="Close cookie notice">✕</button>
     </div>
 
-    <button class="cookie-float-btn" id="cookieFloatBtn" title="Cookie settings">🍪</button>
+    <button class="cookie-float-btn" id="cookieFloatBtn" title="Cookie settings" aria-label="Cookie settings">🍪</button>
 
     <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
         <h2 data-en="Cookie Preferences" data-el="Προτιμήσεις Cookies">Cookie Preferences</h2>
@@ -472,28 +698,28 @@
                     <strong data-en="Essential Cookies" data-el="Απαραίτητα Cookies">Essential Cookies</strong>
                     <small data-en="Required for the website to function properly." data-el="Απαιτούνται για τη σωστή λειτουργία του ιστότοπου.">Required for the website to function properly.</small>
                 </div>
-                <input type="checkbox" id="essentialCookies" checked disabled>
+                <input type="checkbox" id="essentialCookies" checked disabled aria-label="Essential cookies (required)">
             </div>
             <div class="cookie-option">
                 <div class="cookie-option-info">
                     <strong data-en="Functional Cookies" data-el="Λειτουργικά Cookies">Functional Cookies</strong>
                     <small data-en="Remember your preferences like theme and language." data-el="Απομνημονεύουν τις προτιμήσεις σας όπως θέμα και γλώσσα.">Remember your preferences like theme and language.</small>
                 </div>
-                <input type="checkbox" id="functionalCookies" checked>
+                <input type="checkbox" id="functionalCookies" checked aria-label="Functional cookies">
             </div>
             <div class="cookie-option">
                 <div class="cookie-option-info">
                     <strong data-en="Analytics Cookies" data-el="Cookies Ανάλυσης">Analytics Cookies</strong>
                     <small data-en="Help us understand how visitors use our website." data-el="Μας βοηθούν να κατανοήσουμε πώς χρησιμοποιούν οι επισκέπτες τον ιστότοπό μας.">Help us understand how visitors use our website.</small>
                 </div>
-                <input type="checkbox" id="analyticsCookies">
+                <input type="checkbox" id="analyticsCookies" aria-label="Analytics cookies">
             </div>
             <div class="cookie-option">
                 <div class="cookie-option-info">
                     <strong data-en="Marketing Cookies" data-el="Cookies Marketing">Marketing Cookies</strong>
                     <small data-en="Used to deliver relevant advertisements." data-el="Χρησιμοποιούνται για την προβολή σχετικών διαφημίσεων.">Used to deliver relevant advertisements.</small>
                 </div>
-                <input type="checkbox" id="marketingCookies">
+                <input type="checkbox" id="marketingCookies" aria-label="Marketing cookies">
             </div>
         </div>
         <div class="cookie-actions">
@@ -519,13 +745,220 @@
         const analyticsCookies = document.getElementById('analyticsCookies');
         const marketingCookies = document.getElementById('marketingCookies');
 
-        const COOKIE_NAME = 'cookieConsent';
+        const a11yToggleBtn = document.getElementById('a11yToggleBtn');
+        const a11yFloatBtn = document.getElementById('a11yFloatBtn');
+        const a11yPanel = document.getElementById('a11yPanel');
+        const a11yOverlay = document.getElementById('a11yOverlay');
+        const closeA11yPanel = document.getElementById('closeA11yPanel');
+        const fontSizeSelect = document.getElementById('fontSizeSelect');
+        const highContrastToggle = document.getElementById('highContrastToggle');
+        const letterSpacingToggle = document.getElementById('letterSpacingToggle');
+        const readableFontToggle = document.getElementById('readableFontToggle');
+        const reducedMotionToggle = document.getElementById('reducedMotionToggle');
+        const ttsToggle = document.getElementById('ttsToggle');
+        const underlineLinksToggle = document.getElementById('underlineLinksToggle');
+        const largeCursorToggle = document.getElementById('largeCursorToggle');
+        const resetA11y = document.getElementById('resetA11y');
+        const ttsIndicator = document.getElementById('ttsIndicator');
 
-        let cookieChoices = {
-            functional: true,
-            analytics: false,
-            marketing: false
+        const COOKIE_NAME = 'cookieConsent';
+        const A11Y_KEY = 'a11ySettings';
+
+        let cookieChoices = { functional: true, analytics: false, marketing: false };
+        let isSpeaking = false;
+        let speechSynth = window.speechSynthesis;
+        let utterance = null;
+
+        const defaultA11y = {
+            fontSize: 'normal',
+            highContrast: false,
+            letterSpacing: false,
+            readableFont: false,
+            reducedMotion: false,
+            underlineLinks: false,
+            largeCursor: false
         };
+
+        let a11ySettings = { ...defaultA11y };
+
+        function loadA11ySettings() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(A11Y_KEY));
+                if (saved) {
+                    a11ySettings = { ...defaultA11y, ...saved };
+                }
+            } catch(e) {}
+            applyAllA11y();
+        }
+
+        function saveA11ySettings() {
+            localStorage.setItem(A11Y_KEY, JSON.stringify(a11ySettings));
+        }
+
+        function applyAllA11y() {
+            document.documentElement.setAttribute('data-font-size', a11ySettings.fontSize);
+            document.documentElement.setAttribute('data-high-contrast', a11ySettings.highContrast);
+            document.documentElement.setAttribute('data-reduced-motion', a11ySettings.reducedMotion);
+
+            document.documentElement.style.setProperty('--letter-spacing', a11ySettings.letterSpacing ? '0.12em' : 'normal');
+            document.documentElement.style.setProperty('--line-height', a11ySettings.letterSpacing ? '2' : '1.6');
+
+            if (a11ySettings.readableFont) {
+                document.body.style.fontFamily = "'Atkinson Hyperlegible', 'Lexend', 'Andika', Arial, sans-serif";
+            } else {
+                document.body.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+            }
+
+            if (a11ySettings.underlineLinks) {
+                document.querySelectorAll('a').forEach(a => a.style.textDecoration = 'underline');
+            } else {
+                document.querySelectorAll('a').forEach(a => a.style.textDecoration = '');
+            }
+
+            if (a11ySettings.largeCursor) {
+                document.body.style.cursor = "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2215%22 fill=%22white%22 stroke=%22black%22 stroke-width=%222%22/%3E%3C/svg%3E') 16 16, auto";
+            } else {
+                document.body.style.cursor = 'auto';
+            }
+
+            fontSizeSelect.value = a11ySettings.fontSize;
+            highContrastToggle.setAttribute('aria-pressed', a11ySettings.highContrast);
+            letterSpacingToggle.setAttribute('aria-pressed', a11ySettings.letterSpacing);
+            readableFontToggle.setAttribute('aria-pressed', a11ySettings.readableFont);
+            reducedMotionToggle.setAttribute('aria-pressed', a11ySettings.reducedMotion);
+            underlineLinksToggle.setAttribute('aria-pressed', a11ySettings.underlineLinks);
+            largeCursorToggle.setAttribute('aria-pressed', a11ySettings.largeCursor);
+
+            updateA11yButtonTexts();
+        }
+
+        function updateA11yButtonTexts() {
+            const lang = document.documentElement.lang || 'en';
+            highContrastToggle.textContent = a11ySettings.highContrast ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            letterSpacingToggle.textContent = a11ySettings.letterSpacing ?
+                (lang === 'el' ? 'Μείωση' : 'Decrease') :
+                (lang === 'el' ? 'Αύξηση' : 'Increase');
+            readableFontToggle.textContent = a11ySettings.readableFont ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            reducedMotionToggle.textContent = a11ySettings.reducedMotion ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            underlineLinksToggle.textContent = a11ySettings.underlineLinks ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            largeCursorToggle.textContent = a11ySettings.largeCursor ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+        }
+
+        function toggleA11yPanel() {
+            const isOpen = a11yPanel.classList.contains('visible');
+            if (isOpen) {
+                a11yPanel.classList.remove('visible');
+                a11yOverlay.classList.remove('visible');
+            } else {
+                a11yPanel.classList.add('visible');
+                a11yOverlay.classList.add('visible');
+            }
+        }
+
+        /* a11yToggleBtn.addEventListener('click', toggleA11yPanel); */
+        a11yFloatBtn.addEventListener('click', toggleA11yPanel);
+        closeA11yPanel.addEventListener('click', toggleA11yPanel);
+        a11yOverlay.addEventListener('click', toggleA11yPanel);
+
+        fontSizeSelect.addEventListener('change', () => {
+            a11ySettings.fontSize = fontSizeSelect.value;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        highContrastToggle.addEventListener('click', () => {
+            a11ySettings.highContrast = !a11ySettings.highContrast;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        letterSpacingToggle.addEventListener('click', () => {
+            a11ySettings.letterSpacing = !a11ySettings.letterSpacing;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        readableFontToggle.addEventListener('click', () => {
+            a11ySettings.readableFont = !a11ySettings.readableFont;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        reducedMotionToggle.addEventListener('click', () => {
+            a11ySettings.reducedMotion = !a11ySettings.reducedMotion;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        underlineLinksToggle.addEventListener('click', () => {
+            a11ySettings.underlineLinks = !a11ySettings.underlineLinks;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        largeCursorToggle.addEventListener('click', () => {
+            a11ySettings.largeCursor = !a11ySettings.largeCursor;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        resetA11y.addEventListener('click', () => {
+            a11ySettings = { ...defaultA11y };
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        function speakText(text, lang) {
+            speechSynth.cancel();
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang === 'el' ? 'el-GR' : 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.onstart = () => {
+                isSpeaking = true;
+                ttsIndicator.classList.add('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'true');
+                ttsToggle.textContent = lang === 'el' ? '⏹ Διακοπή' : '⏹ Stop';
+            };
+            utterance.onend = () => {
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            };
+            utterance.onerror = () => {
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            };
+            speechSynth.speak(utterance);
+        }
+
+        ttsToggle.addEventListener('click', () => {
+            const lang = document.documentElement.lang || 'en';
+            if (isSpeaking) {
+                speechSynth.cancel();
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            } else {
+                const mainContent = document.querySelector('main');
+                const textToRead = mainContent ? mainContent.textContent.trim() : document.body.textContent.trim();
+                speakText(textToRead, lang);
+            }
+        });
 
         function updateThemeButton() {
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -561,6 +994,14 @@
             localStorage.setItem('lang', lang);
             updateThemeButton();
             updateLangButton();
+            updateA11yButtonTexts();
+            if (isSpeaking) {
+                speechSynth.cancel();
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            }
         }
 
         function getCookie(name) {
@@ -569,12 +1010,8 @@
             const ca = decodedCookie.split(';');
             for(let i = 0; i < ca.length; i++) {
                 let c = ca[i];
-                while(c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if(c.indexOf(cname) == 0) {
-                    return c.substring(cname.length);
-                }
+                while(c.charAt(0) == ' ') { c = c.substring(1); }
+                if(c.indexOf(cname) == 0) { return c.substring(cname.length); }
             }
             return "";
         }
@@ -586,18 +1023,12 @@
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
         }
 
-        function saveCookieChoices(choices) {
-            setCookie(COOKIE_NAME, JSON.stringify(choices), 365);
-        }
+        function saveCookieChoices(choices) { setCookie(COOKIE_NAME, JSON.stringify(choices), 365); }
 
         function loadCookieChoices() {
             const consentData = getCookie(COOKIE_NAME);
             if (consentData && consentData !== "") {
-                try {
-                    return JSON.parse(consentData);
-                } catch(e) {
-                    return null;
-                }
+                try { return JSON.parse(consentData); } catch(e) { return null; }
             }
             return null;
         }
@@ -632,30 +1063,12 @@
             hideCookieBanner();
         }
 
-        cookieNoticeBtn.addEventListener('click', () => {
-            updateCheckboxes();
-            showCookieBanner();
-        });
+        cookieNoticeBtn.addEventListener('click', () => { updateCheckboxes(); showCookieBanner(); });
+        cookieNoticeClose.addEventListener('click', () => { cookieNotice.classList.remove('visible'); });
+        cookieFloatBtn.addEventListener('click', () => { updateCheckboxes(); showCookieBanner(); });
 
-        cookieNoticeClose.addEventListener('click', () => {
-            cookieNotice.classList.remove('visible');
-        });
-
-        cookieFloatBtn.addEventListener('click', () => {
-            updateCheckboxes();
-            showCookieBanner();
-        });
-
-        acceptAllCookies.addEventListener('click', () => {
-            setAllCookies(true);
-            handleCookieDecision(cookieChoices);
-        });
-
-        rejectAllCookies.addEventListener('click', () => {
-            setAllCookies(false);
-            handleCookieDecision(cookieChoices);
-        });
-
+        acceptAllCookies.addEventListener('click', () => { setAllCookies(true); handleCookieDecision(cookieChoices); });
+        rejectAllCookies.addEventListener('click', () => { setAllCookies(false); handleCookieDecision(cookieChoices); });
         saveCookies.addEventListener('click', () => {
             cookieChoices.functional = functionalCookies.checked;
             cookieChoices.analytics = analyticsCookies.checked;
@@ -674,9 +1087,16 @@
 
         document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
         translatePage(localStorage.getItem('lang') || 'en');
+        loadA11ySettings();
 
         window.addEventListener('scroll', () => {
             topBtn.classList.toggle('show', window.scrollY > 300);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && a11yPanel.classList.contains('visible')) {
+                toggleA11yPanel();
+            }
         });
     </script>
 </body>

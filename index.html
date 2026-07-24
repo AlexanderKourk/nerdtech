@@ -148,7 +148,6 @@
         }
 
         .theme-btn:hover, .a11y-btn:hover { background: var(--border-color); }
-        .a11y-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         .a11y-panel {
             display: none;
@@ -402,9 +401,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        .cookie-notice-text {
-            color: var(--text-color);
-        }
+        .cookie-notice-text { color: var(--text-color); }
 
         .cookie-notice-btn {
             background: var(--primary);
@@ -454,7 +451,6 @@
         }
 
         .cookie-float-btn.visible { display: flex; }
-
         .cookie-float-btn:hover { background: var(--border-color); }
 
         .cookie-banner {
@@ -502,7 +498,6 @@
         }
 
         .cookie-option:last-child { border-bottom: none; }
-
         .cookie-option-info { flex: 1; }
 
         .cookie-option-info strong {
@@ -561,7 +556,6 @@
     </style>
 </head>
 <body>
-
     <header>
         <a href="#home" class="logo" aria-label="NerdTech Home">NerdTech</a>
         <nav class="nav" aria-label="Main navigation">
@@ -570,16 +564,17 @@
         </nav>
         <div class="toolbar">
             <div class="theme-group">
-                <button class="theme-btn" id="themeToggleBtn" title="Toggle theme" data-en-light="🌙 Dark" data-el-light="🌙 Σκοτεινό" data-en-dark="☀️ Light" data-el-dark="☀️ Φωτεινό" aria-label="Toggle dark mode"></button>
-                <button class="theme-btn" id="langToggleBtn" title="Toggle language" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English" aria-label="Toggle language"></button>
+                <button class="theme-btn" id="themeToggleBtn" data-en-title="Toggle theme" data-el-title="Αλλαγή θέματος" data-en-light="🌙 Dark" data-el-light="🌙 Σκοτεινό" data-en-dark="☀️ Light" data-el-dark="☀️ Φωτεινό" aria-label="Toggle dark mode"></button>
+                <button class="theme-btn" id="langToggleBtn" data-en-title="Toggle language" data-el-title="Αλλαγή γλώσσας" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English" aria-label="Toggle language"></button>
             </div>
-           </div>
+           <!-- <button class="a11y-btn" id="a11yToggleBtn" data-en-title="Accessibility Options" data-el-title="Επιλογές Προσβασιμότητας" title="Accessibility Options" aria-label="Open accessibility options">♿</button> -->
+        </div>
     </header>
 
     <main>
         <section class="hero" id="home" aria-labelledby="hero-heading">
             <h1 id="hero-heading" data-en="IT Services" data-el="Υπηρεσίες Πληροφορικής">IT Services</h1>
-            <p data-en="The services offered are as follows:" data-el="Οι υπηρεσίες που προσφέρονται είναι οι εξής:"></p>
+            <p data-en="The services offered are as follows:" data-el="Οι υπηρεσίες που προσφέρονται είναι οι εξής:">The services offered are as follows:</p>
         </section>
 
         <section class="cards-section" aria-label="Services list">
@@ -611,7 +606,7 @@
             <div class="card" tabindex="0">
                 <div class="card-icon" aria-hidden="true">📝</div>
                 <h3 data-en="System Compatibility Recommendations" data-el="Προτάσεις Συμβατότητας Συστημάτων">System Compatibility Recommendations</h3>
-                <p data-en="We recommend the appropriate computer system based on the client's usage and budget" data-el= "Προτείνουμε με βάση την χρήση και το budget του πελάτη το κατάλληλο σύστημα υπολογιστή">We recommend the appropriate computer system based on the client's usage and budget</p>
+                <p data-en="We recommend the appropriate computer system based on the client's usage and budget" data-el="Προτείνουμε με βάση την χρήση και το budget του πελάτη το κατάλληλο σύστημα υπολογιστή">We recommend the appropriate computer system based on the client's usage and budget</p>
             </div>
         </section>
     </main>
@@ -620,12 +615,12 @@
         <p data-en="&copy; 2026 NerdTech" data-el="&copy; 2026 NerdTech">&copy; 2026 NerdTech</p>
     </footer>
 
-    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Scroll to top">Top</button>
-    <button class="a11y-float-btn" id="a11yFloatBtn" aria-label="Accessibility options" title="Accessibility Options">♿</button>
+    <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" data-en="Top" data-el="Κορυφή" data-en-title="Scroll to top" data-el-title="Μετάβαση στην κορυφή" title="Scroll to top" aria-label="Scroll to top">Top</button>
+    <button class="a11y-float-btn" id="a11yFloatBtn" data-en-title="Accessibility Options" data-el-title="Επιλογές Προσβασιμότητας" title="Accessibility Options" aria-label="Accessibility options">♿</button>
 
     <div class="overlay" id="a11yOverlay"></div>
     <div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="Accessibility Options" aria-modal="true">
-        <button class="close-panel" id="closeA11yPanel" aria-label="Close accessibility panel">✕</button>
+        <button class="close-panel" id="closeA11yPanel" data-en-title="Close" data-el-title="Κλείσιμο" title="Close" aria-label="Close accessibility panel">✕</button>
         <h3 data-en="Accessibility Options" data-el="Επιλογές Προσβασιμότητας">Accessibility Options</h3>
 
         <div class="a11y-option">
@@ -684,10 +679,10 @@
     <div class="cookie-notice" id="cookieNotice">
         <span class="cookie-notice-text" data-en="🍪 Adjust your cookie preferences here" data-el="🍪 Προσαρμόστε τις προτιμήσεις cookies εδώ">🍪 Adjust your cookie preferences here</span>
         <button class="cookie-notice-btn" id="cookieNoticeBtn" data-en="Open Settings" data-el="Άνοιγμα Ρυθμίσεων">Open Settings</button>
-        <button class="cookie-notice-close" id="cookieNoticeClose" title="Close" aria-label="Close cookie notice">✕</button>
+        <button class="cookie-notice-close" id="cookieNoticeClose" data-en-title="Close" data-el-title="Κλείσιμο" title="Close" aria-label="Close cookie notice">✕</button>
     </div>
 
-    <button class="cookie-float-btn" id="cookieFloatBtn" title="Cookie settings" aria-label="Cookie settings">🍪</button>
+    <button class="cookie-float-btn" id="cookieFloatBtn" data-en-title="Cookie Settings" data-el-title="Ρυθμίσεις Cookies" title="Cookie Settings" aria-label="Cookie settings">🍪</button>
 
     <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
         <h2 data-en="Cookie Preferences" data-el="Προτιμήσεις Cookies">Cookie Preferences</h2>
@@ -854,6 +849,22 @@
                 (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
         }
 
+        function updateFloatingButtonTitles() {
+            const lang = document.documentElement.lang || 'en';
+            const attrTitle = `data-${lang}-title`;
+
+            [themeToggleBtn, langToggleBtn, a11yToggleBtn, topBtn, a11yFloatBtn,
+             cookieFloatBtn, cookieNoticeClose, closeA11yPanel].forEach(btn => {
+                if (btn && btn.hasAttribute(attrTitle)) {
+                    btn.title = btn.getAttribute(attrTitle);
+                }
+            });
+
+            if (topBtn) {
+                topBtn.setAttribute('aria-label', topBtn.getAttribute(`data-${lang}-title`));
+            }
+        }
+
         function toggleA11yPanel() {
             const isOpen = a11yPanel.classList.contains('visible');
             if (isOpen) {
@@ -865,7 +876,7 @@
             }
         }
 
-        /* a11yToggleBtn.addEventListener('click', toggleA11yPanel); */
+       /* a11yToggleBtn.addEventListener('click', toggleA11yPanel); */
         a11yFloatBtn.addEventListener('click', toggleA11yPanel);
         closeA11yPanel.addEventListener('click', toggleA11yPanel);
         a11yOverlay.addEventListener('click', toggleA11yPanel);
@@ -995,6 +1006,7 @@
             updateThemeButton();
             updateLangButton();
             updateA11yButtonTexts();
+            updateFloatingButtonTitles();
             if (isSpeaking) {
                 speechSynth.cancel();
                 isSpeaking = false;

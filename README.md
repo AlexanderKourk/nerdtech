@@ -1,2 +1,2 @@
-# nerdtech
+# nerdstech
 # A simple HTML page

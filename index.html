@@ -299,7 +299,7 @@
 
         .hero p {
             font-size: calc(1.25rem * var(--font-size-multiplier));
-            /* color: var(--text-muted); */
+            color: #ffffff;
             max-width: 600px;
             margin: 0 auto 2rem;
         }
@@ -370,6 +370,7 @@
             visibility: hidden;
             transform: translateY(10px);
             transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background-color 0.3s;
+            z-index: 1000;
         }
 
         .top-btn.show {

@@ -209,10 +209,141 @@
 
         footer {
             text-align: center;
-           /* color: var(--text-muted); */
             font-size: calc(0.875rem * var(--font-size-multiplier));
             position: relative;
             z-index: 1;
+        }
+
+        .a11y-float-btn {
+            position: fixed;
+            left: 20px;
+            bottom: 80px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 999px;
+            width: 48px;
+            height: 48px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            z-index: 9998;
+            color: var(--text-color);
+        }
+
+        .a11y-float-btn:hover { background: var(--border-color); }
+
+        .a11y-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            z-index: 10000;
+            width: min(400px, 90vw);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .a11y-panel.visible { display: block; }
+
+        .a11y-panel h3 {
+            margin-bottom: 1rem;
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .a11y-panel .a11y-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .a11y-panel .a11y-option:last-child { border-bottom: none; }
+
+        .a11y-panel button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+            margin-top: 0;
+        }
+
+        .a11y-panel select {
+            padding: 0.4rem;
+            border-radius: 0.375rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+            width: auto;
+        }
+
+        .a11y-panel .close-panel {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
+
+        .overlay.visible { display: block; }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .tts-indicator {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            z-index: 9998;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tts-indicator.speaking {
+            display: flex;
         }
     </style>
 </head>
@@ -285,6 +416,66 @@
         <p data-en="Copyright © 2026 - All Rights Reserved" data-el="Πνευματικά δικαιώματα © 2026 - Με την επιφύλαξη παντός δικαιώματος">Copyright © 2026 - All Rights Reserved</p>
     </footer>
 
+    <button class="a11y-float-btn" id="a11yFloatBtn" data-en-title="Accessibility Options" data-el-title="Επιλογές Προσβασιμότητας" title="Accessibility Options" aria-label="Accessibility options">♿</button>
+
+    <div class="overlay" id="a11yOverlay"></div>
+    <div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="Accessibility Options" aria-modal="true">
+        <button class="close-panel" id="closeA11yPanel" data-en-title="Close" data-el-title="Κλείσιμο" title="Close" aria-label="Close accessibility panel">✕</button>
+        <h3 data-en="Accessibility Options" data-el="Επιλογές Προσβασιμότητας">Accessibility Options</h3>
+
+        <div class="a11y-option">
+            <span data-en="🔤 Text Size" data-el="🔤 Μέγεθος Κειμένου">🔤 Text Size</span>
+            <select id="fontSizeSelect" aria-label="Text size">
+                <option value="normal" data-en="Normal" data-el="Κανονικό">Normal</option>
+                <option value="large" data-en="Large" data-el="Μεγάλο">Large</option>
+                <option value="xlarge" data-en="Extra Large" data-el="Πολύ Μεγάλο">Extra Large</option>
+            </select>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🌈 High Contrast" data-el="🌈 Υψηλή Αντίθεση">🌈 High Contrast</span>
+            <button id="highContrastToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔤 Letter Spacing" data-el="🔤 Απόσταση Γραμμάτων">🔤 Letter Spacing</span>
+            <button id="letterSpacingToggle" data-en="Increase" data-el="Αύξηση" aria-pressed="false">Increase</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="📖 Readable Font" data-el="📖 Ευανάγνωστη Γραμματοσειρά">📖 Readable Font</span>
+            <button id="readableFontToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔇 Reduced Motion" data-el="🔇 Μείωση Κίνησης">🔇 Reduced Motion</span>
+            <button id="reducedMotionToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🗣️ Read Page Aloud" data-el="🗣️ Ανάγνωση Σελίδας">🗣️ Read Page Aloud</span>
+            <button id="ttsToggle" data-en="Start Reading" data-el="Έναρξη Ανάγνωσης" aria-pressed="false">Start Reading</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔗 Underline Links" data-el="🔗 Υπογράμμιση Συνδέσμων">🔗 Underline Links</span>
+            <button id="underlineLinksToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option">
+            <span data-en="🔲 Large Cursor" data-el="🔲 Μεγάλος Κέρσορας">🔲 Large Cursor</span>
+            <button id="largeCursorToggle" data-en="Enable" data-el="Ενεργοποίηση" aria-pressed="false">Enable</button>
+        </div>
+
+        <div class="a11y-option" style="border-bottom:none;">
+            <button id="resetA11y" style="width:100%;" data-en="🔄 Reset All Settings" data-el="🔄 Επαναφορά Ρυθμίσεων">🔄 Reset All Settings</button>
+        </div>
+    </div>
+
+    <div class="tts-indicator" id="ttsIndicator" aria-live="polite">
+        🔊 <span data-en="Reading..." data-el="Ανάγνωση...">Reading...</span>
+    </div>
+
     <script>
         const contactForm = document.getElementById('contactForm');
         const successMsg = document.getElementById('successMsg');
@@ -297,7 +488,26 @@
         const emailError = document.getElementById('emailError');
         const serviceSelect = document.getElementById('service');
 
+        const a11yFloatBtn = document.getElementById('a11yFloatBtn');
+        const a11yPanel = document.getElementById('a11yPanel');
+        const a11yOverlay = document.getElementById('a11yOverlay');
+        const closeA11yPanel = document.getElementById('closeA11yPanel');
+        const fontSizeSelect = document.getElementById('fontSizeSelect');
+        const highContrastToggle = document.getElementById('highContrastToggle');
+        const letterSpacingToggle = document.getElementById('letterSpacingToggle');
+        const readableFontToggle = document.getElementById('readableFontToggle');
+        const reducedMotionToggle = document.getElementById('reducedMotionToggle');
+        const ttsToggle = document.getElementById('ttsToggle');
+        const underlineLinksToggle = document.getElementById('underlineLinksToggle');
+        const largeCursorToggle = document.getElementById('largeCursorToggle');
+        const resetA11y = document.getElementById('resetA11y');
+        const ttsIndicator = document.getElementById('ttsIndicator');
+
         const A11Y_KEY = 'a11ySettings';
+
+        let isSpeaking = false;
+        let speechSynth = window.speechSynthesis;
+        let utterance = null;
 
         const defaultA11y = {
             fontSize: 'normal',
@@ -317,6 +527,10 @@
                 if (saved) a11ySettings = { ...defaultA11y, ...saved };
             } catch(e) {}
             applyAllA11y();
+        }
+
+        function saveA11ySettings() {
+            localStorage.setItem(A11Y_KEY, JSON.stringify(a11ySettings));
         }
 
         function applyAllA11y() {
@@ -341,7 +555,144 @@
             } else {
                 document.body.style.cursor = 'auto';
             }
+
+            fontSizeSelect.value = a11ySettings.fontSize;
+            highContrastToggle.setAttribute('aria-pressed', a11ySettings.highContrast);
+            letterSpacingToggle.setAttribute('aria-pressed', a11ySettings.letterSpacing);
+            readableFontToggle.setAttribute('aria-pressed', a11ySettings.readableFont);
+            reducedMotionToggle.setAttribute('aria-pressed', a11ySettings.reducedMotion);
+            underlineLinksToggle.setAttribute('aria-pressed', a11ySettings.underlineLinks);
+            largeCursorToggle.setAttribute('aria-pressed', a11ySettings.largeCursor);
+
+            updateA11yButtonTexts();
         }
+
+        function updateA11yButtonTexts() {
+            const lang = document.documentElement.lang || 'en';
+            highContrastToggle.textContent = a11ySettings.highContrast ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            letterSpacingToggle.textContent = a11ySettings.letterSpacing ?
+                (lang === 'el' ? 'Μείωση' : 'Decrease') :
+                (lang === 'el' ? 'Αύξηση' : 'Increase');
+            readableFontToggle.textContent = a11ySettings.readableFont ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            reducedMotionToggle.textContent = a11ySettings.reducedMotion ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            underlineLinksToggle.textContent = a11ySettings.underlineLinks ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+            largeCursorToggle.textContent = a11ySettings.largeCursor ?
+                (lang === 'el' ? 'Απενεργοποίηση' : 'Disable') :
+                (lang === 'el' ? 'Ενεργοποίηση' : 'Enable');
+        }
+
+        function toggleA11yPanel() {
+            const isOpen = a11yPanel.classList.contains('visible');
+            if (isOpen) {
+                a11yPanel.classList.remove('visible');
+                a11yOverlay.classList.remove('visible');
+            } else {
+                a11yPanel.classList.add('visible');
+                a11yOverlay.classList.add('visible');
+            }
+        }
+
+        a11yFloatBtn.addEventListener('click', toggleA11yPanel);
+        closeA11yPanel.addEventListener('click', toggleA11yPanel);
+        a11yOverlay.addEventListener('click', toggleA11yPanel);
+
+        fontSizeSelect.addEventListener('change', () => {
+            a11ySettings.fontSize = fontSizeSelect.value;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        highContrastToggle.addEventListener('click', () => {
+            a11ySettings.highContrast = !a11ySettings.highContrast;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        letterSpacingToggle.addEventListener('click', () => {
+            a11ySettings.letterSpacing = !a11ySettings.letterSpacing;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        readableFontToggle.addEventListener('click', () => {
+            a11ySettings.readableFont = !a11ySettings.readableFont;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        reducedMotionToggle.addEventListener('click', () => {
+            a11ySettings.reducedMotion = !a11ySettings.reducedMotion;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        underlineLinksToggle.addEventListener('click', () => {
+            a11ySettings.underlineLinks = !a11ySettings.underlineLinks;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        largeCursorToggle.addEventListener('click', () => {
+            a11ySettings.largeCursor = !a11ySettings.largeCursor;
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        resetA11y.addEventListener('click', () => {
+            a11ySettings = { ...defaultA11y };
+            applyAllA11y();
+            saveA11ySettings();
+        });
+
+        function speakText(text, lang) {
+            speechSynth.cancel();
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang === 'el' ? 'el-GR' : 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.onstart = () => {
+                isSpeaking = true;
+                ttsIndicator.classList.add('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'true');
+                ttsToggle.textContent = lang === 'el' ? '⏹ Διακοπή' : '⏹ Stop';
+            };
+            utterance.onend = () => {
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            };
+            utterance.onerror = () => {
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            };
+            speechSynth.speak(utterance);
+        }
+
+        ttsToggle.addEventListener('click', () => {
+            const lang = document.documentElement.lang || 'en';
+            if (isSpeaking) {
+                speechSynth.cancel();
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            } else {
+                const boxContent = document.querySelector('.box');
+                const textToRead = boxContent ? boxContent.textContent.trim() : document.body.textContent.trim();
+                speakText(textToRead, lang);
+            }
+        });
 
         function applyTheme() {
             document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
@@ -357,6 +708,25 @@
             });
             document.querySelectorAll('select option[data-en]').forEach(option => {
                 option.textContent = option.getAttribute(`data-${lang}`);
+            });
+            updateA11yButtonTexts();
+            updateFloatingButtonTitles();
+            if (isSpeaking) {
+                speechSynth.cancel();
+                isSpeaking = false;
+                ttsIndicator.classList.remove('speaking');
+                ttsToggle.setAttribute('aria-pressed', 'false');
+                ttsToggle.textContent = lang === 'el' ? '🗣️ Έναρξη Ανάγνωσης' : '🗣️ Start Reading';
+            }
+        }
+
+        function updateFloatingButtonTitles() {
+            const lang = document.documentElement.lang || 'en';
+            const attrTitle = `data-${lang}-title`;
+            [a11yFloatBtn, closeA11yPanel].forEach(btn => {
+                if (btn && btn.hasAttribute(attrTitle)) {
+                    btn.title = btn.getAttribute(attrTitle);
+                }
             });
         }
 
@@ -422,6 +792,12 @@
                 } else throw new Error('Failed');
             } catch (error) {
                 successMsg.style.display = 'none'; errorMsg.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && a11yPanel.classList.contains('visible')) {
+                toggleA11yPanel();
             }
         });
     </script>

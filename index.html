@@ -78,6 +78,26 @@
             line-height: var(--line-height);
             background-color: var(--bg-color);
             color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         :focus-visible {
@@ -95,6 +115,8 @@
             border-bottom: 1px solid var(--border-color);
             gap: 1rem;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
 
         .logo {
@@ -262,6 +284,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .hero { text-align: center; }
@@ -295,6 +319,7 @@
             text-align: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
         }
 
         .card:hover {
@@ -324,6 +349,8 @@
             font-size: calc(0.875rem * var(--font-size-multiplier));
             border-top: 1px solid var(--border-color);
             margin-top: 4rem;
+            position: relative;
+            z-index: 1;
         }
 
         .top-btn {
@@ -556,6 +583,7 @@
     </style>
 </head>
 <body>
+    <div class="animated-bg"></div>
     <header>
         <a href="index.html" class="logo" aria-label="NerdTech Home">NerdTech</a>
         <nav class="nav" aria-label="Main navigation">
@@ -612,7 +640,7 @@
     </main>
 
     <footer role="contentinfo">
-         <p data-en="Copyright © 2026 - All Rights Reserved" data-el="Πνευματικά δικαιώματα © 2026 - Με την επιφύλαξη παντός δικαιώματος">Copyright © 2026 - All Rights Reserved</p>
+        <p data-en="Copyright © 2026 - All Rights Reserved" data-el="Πνευματικά δικαιώματα © 2026 - Με την επιφύλαξη παντός δικαιώματος">Copyright © 2026 - All Rights Reserved</p>
     </footer>
 
     <button class="top-btn" id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" data-en="Top" data-el="Κορυφή" data-en-title="Scroll to top" data-el-title="Μετάβαση στην κορυφή" title="Scroll to top" aria-label="Scroll to top">Top</button>

@@ -21,15 +21,6 @@
             --focus-outline: 3px solid #3b82f6;
         }
 
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --input-bg: #1e293b;
-        }
-
         [data-high-contrast="true"] {
             --bg-color: #000000 !important;
             --card-bg: #000000 !important;
@@ -40,17 +31,6 @@
             --border-color: #ffffff !important;
             --input-bg: #000000 !important;
             --focus-outline: 4px solid #ffff00 !important;
-        }
-
-        [data-high-contrast="true"] [data-theme="dark"] {
-            --bg-color: #000000 !important;
-            --card-bg: #000000 !important;
-            --text-color: #ffffff !important;
-            --text-muted: #ffff00 !important;
-            --primary: #00ffff !important;
-            --primary-hover: #00cccc !important;
-            --border-color: #ffffff !important;
-            --input-bg: #000000 !important;
         }
 
         [data-font-size="large"] {
@@ -694,10 +674,6 @@
             }
         });
 
-        function applyTheme() {
-            document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
-        }
-
         function translatePage(lang) {
             document.documentElement.lang = lang === 'el' ? 'el' : 'en';
             document.querySelectorAll('[data-en]:not(select option)').forEach(el => {
@@ -734,12 +710,10 @@
             translatePage(localStorage.getItem('lang') || 'en');
         }
 
-        applyTheme();
         applyLanguage();
         loadA11ySettings();
 
         window.addEventListener('storage', (e) => {
-            if (e.key === 'theme') applyTheme();
             if (e.key === 'lang') applyLanguage();
             if (e.key === A11Y_KEY) loadA11ySettings();
         });

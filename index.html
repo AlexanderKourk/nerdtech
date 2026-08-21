@@ -20,14 +20,6 @@
             --focus-outline: 3px solid #3b82f6;
         }
 
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-        }
-
         [data-high-contrast="true"] {
             --bg-color: #000000 !important;
             --card-bg: #000000 !important;
@@ -37,16 +29,6 @@
             --primary-hover: #00cccc !important;
             --border-color: #ffffff !important;
             --focus-outline: 4px solid #ffff00 !important;
-        }
-
-        [data-high-contrast="true"] [data-theme="dark"] {
-            --bg-color: #000000 !important;
-            --card-bg: #000000 !important;
-            --text-color: #ffffff !important;
-            --text-muted: #ffff00 !important;
-            --primary: #00ffff !important;
-            --primary-hover: #00cccc !important;
-            --border-color: #ffffff !important;
         }
 
         [data-font-size="large"] {
@@ -151,13 +133,13 @@
             align-items: center;
         }
 
-        .theme-group {
+        .language-group {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
 
-        .theme-btn, .a11y-btn {
+        .lang-btn, .a11y-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
@@ -169,7 +151,7 @@
             white-space: nowrap;
         }
 
-        .theme-btn:hover, .a11y-btn:hover { background: var(--border-color); }
+        .lang-btn:hover, .a11y-btn:hover { background: var(--border-color); }
 
         .a11y-panel {
             display: none;
@@ -345,7 +327,6 @@
         footer {
             text-align: center;
             padding: 3rem 2rem;
-            /* color: var(--text-muted); */
             font-size: calc(0.875rem * var(--font-size-multiplier));
             border-top: 1px solid var(--border-color);
             margin-top: 4rem;
@@ -592,12 +573,9 @@
             <a href="contact.html" data-en="Contact" data-el="Επικοινωνία">Contact</a>
         </nav>
         <div class="toolbar">
-            <div class="theme-group">
-         <button class="theme-btn" id="themeToggleBtn" data-en-title="Toggle theme" data-el-title="Αλλαγή θέματος" data-en-light="🌙 Dark" data-el-light="🌙 Σκοτεινό" data-en-dark="☀️ Light" data-el-dark="☀️ Φωτεινό" aria-label="Toggle dark mode"></button>
-                 <button class="theme-btn" id="langToggleBtn" data-en-title="Toggle language" data-el-title="Αλλαγή γλώσσας" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English" aria-label="Toggle language"></button>
+            <div class="language-group">
+                <button class="lang-btn" id="langToggleBtn" data-en-title="Toggle language" data-el-title="Αλλαγή γλώσσας" data-en="🇬🇷 Ελληνικά" data-el="🇬🇧 English" aria-label="Toggle language"></button>
             </div>
-           <!-- <button class="a11y-btn" id="a11yToggleBtn" data-en-title="Accessibility Options" data-el-title="Επιλογές Προσβασιμότητας" title="Accessibility Options" aria-label="Open accessibility options">♿</button> -->
-      
         </div>
     </header>
 
@@ -765,7 +743,6 @@
     </div>
 
     <script>
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
         const langToggleBtn = document.getElementById('langToggleBtn');
         const topBtn = document.getElementById('topBtn');
         const cookieBanner = document.getElementById('cookieBanner');
@@ -780,7 +757,6 @@
         const analyticsCookies = document.getElementById('analyticsCookies');
         const marketingCookies = document.getElementById('marketingCookies');
 
-        const a11yToggleBtn = document.getElementById('a11yToggleBtn');
         const a11yFloatBtn = document.getElementById('a11yFloatBtn');
         const a11yPanel = document.getElementById('a11yPanel');
         const a11yOverlay = document.getElementById('a11yOverlay');
@@ -892,14 +868,11 @@
         function updateFloatingButtonTitles() {
             const lang = document.documentElement.lang || 'en';
             const attrTitle = `data-${lang}-title`;
-
-            [themeToggleBtn, langToggleBtn, a11yToggleBtn, topBtn, a11yFloatBtn,
-             cookieFloatBtn, cookieNoticeClose, closeA11yPanel].forEach(btn => {
+            [langToggleBtn, topBtn, a11yFloatBtn, cookieFloatBtn, cookieNoticeClose, closeA11yPanel].forEach(btn => {
                 if (btn && btn.hasAttribute(attrTitle)) {
                     btn.title = btn.getAttribute(attrTitle);
                 }
             });
-
             if (topBtn) {
                 topBtn.setAttribute('aria-label', topBtn.getAttribute(`data-${lang}-title`));
             }
@@ -916,7 +889,6 @@
             }
         }
 
-       /* a11yToggleBtn.addEventListener('click', toggleA11yPanel); */
         a11yFloatBtn.addEventListener('click', toggleA11yPanel);
         closeA11yPanel.addEventListener('click', toggleA11yPanel);
         a11yOverlay.addEventListener('click', toggleA11yPanel);
@@ -1011,25 +983,10 @@
             }
         });
 
-        function updateThemeButton() {
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-            const currentLang = document.documentElement.lang || 'en';
-            const themeKey = currentTheme === 'dark' ? 'dark' : 'light';
-            themeToggleBtn.textContent = themeToggleBtn.getAttribute(`data-${currentLang}-${themeKey}`);
-        }
-
         function updateLangButton() {
             const currentLang = document.documentElement.lang || 'en';
             langToggleBtn.textContent = langToggleBtn.getAttribute(`data-${currentLang}`);
         }
-
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeButton();
-        });
 
         langToggleBtn.addEventListener('click', () => {
             const currentLang = document.documentElement.lang || 'en';
@@ -1043,7 +1000,6 @@
                 el.textContent = el.getAttribute(`data-${lang}`);
             });
             localStorage.setItem('lang', lang);
-            updateThemeButton();
             updateLangButton();
             updateA11yButtonTexts();
             updateFloatingButtonTitles();
@@ -1137,7 +1093,6 @@
             cookieNotice.classList.add('visible');
         }
 
-        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
         translatePage(localStorage.getItem('lang') || 'en');
         loadA11ySettings();
 

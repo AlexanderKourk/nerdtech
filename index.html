@@ -139,7 +139,7 @@
             flex-wrap: wrap;
         }
 
-        .lang-btn, .a11y-btn {
+        .lang-select, .a11y-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
@@ -149,9 +149,10 @@
             font-weight: 500;
             font-size: calc(0.9rem * var(--font-size-multiplier));
             white-space: nowrap;
+            font-family: inherit;
         }
 
-        .lang-btn:hover, .a11y-btn:hover { background: var(--border-color); }
+        .lang-select:hover, .a11y-btn:hover { background: var(--border-color); }
 
         .a11y-panel {
             display: none;
@@ -574,7 +575,10 @@
         </nav>
         <div class="toolbar">
             <div class="language-group">
-                <button class="lang-btn" id="langToggleBtn" data-en-title="Toggle language" data-el-title="Αλλαγή γλώσσας" data-en="ΕΛ" data-el="EN" aria-label="Toggle language">Toggle language</button>
+                <select id="langSelect" class="lang-select" aria-label="Language">
+                    <option value="en" data-en="🇬🇧 English" data-el="🇬🇧 Αγγλικά">🇬🇧 English</option>
+                    <option value="el" data-en="🇬🇷 Greek" data-el="🇬🇷 Ελληνικά">🇬🇷 Greek</option>
+                </select>
             </div>
         </div>
     </header>
@@ -618,13 +622,13 @@
             </div>
              <div class="card" tabindex="0">
                 <div class="card-icon" aria-hidden="true">🛡️</div>
-                <h3 data-en="Computer Systems Security" data-el="Ασφάλεια Υπολογιστικών Συστημάτων"></h3>
-                <p data-en="Antivirus software is installed and configured on the respective operating system." data-el="Πραγματοποιείται εγκατάσταση και ρύθμιση αντιικού λογισμικού (Antivirus) στο εκάστοτε λειτουργικό σύστημα">Antivirus software is installed and configured on the respective operating system.</p>
+                <h3 data-en="Computer Systems Security" data-el="Ασφάλεια Υπολογιστικών Συστημάτων">Computer Systems Security</h3>
+                <p data-en="Installing and configuring antivirus software on any operating system" data-el="Πραγματοποιείται εγκατάσταση και ρύθμιση αντιικού λογισμικού (Antivirus) στο εκάστοτε λειτουργικό σύστημα">Installing and configuring antivirus software on any operating system</p>
             </div>
             <div class="card" tabindex="0">
                 <div class="card-icon" aria-hidden="true">🔄</div>
-                <h3 data-en="New services coming soon" data-el="Έρχονται σύντομα νέες υπηρεσίες"></h3>
-                <p data-en="Stay tuned..." data-el="Μείνετε συντονισμένοι..."></p>
+                <h3 data-en="New services coming soon" data-el="Έρχονται σύντομα νέες υπηρεσίες">New services coming soon</h3>
+                <p data-en="Stay tuned..." data-el="Μείνετε συντονισμένοι...">Stay tuned...</p>
             </div>
         </section>
     </main>
@@ -743,7 +747,7 @@
     </div>
 
     <script>
-        const langToggleBtn = document.getElementById('langToggleBtn');
+        const langSelect = document.getElementById('langSelect');
         const topBtn = document.getElementById('topBtn');
         const cookieBanner = document.getElementById('cookieBanner');
         const cookieFloatBtn = document.getElementById('cookieFloatBtn');
@@ -868,7 +872,7 @@
         function updateFloatingButtonTitles() {
             const lang = document.documentElement.lang || 'en';
             const attrTitle = `data-${lang}-title`;
-            [langToggleBtn, topBtn, a11yFloatBtn, cookieFloatBtn, cookieNoticeClose, closeA11yPanel].forEach(btn => {
+            [topBtn, a11yFloatBtn, cookieFloatBtn, cookieNoticeClose, closeA11yPanel].forEach(btn => {
                 if (btn && btn.hasAttribute(attrTitle)) {
                     btn.title = btn.getAttribute(attrTitle);
                 }
@@ -983,24 +987,23 @@
             }
         });
 
-        function updateLangButton() {
+        function updateLangSelect() {
             const currentLang = document.documentElement.lang || 'en';
-            langToggleBtn.textContent = langToggleBtn.getAttribute(`data-${currentLang}`);
+            langSelect.value = currentLang;
         }
 
-        langToggleBtn.addEventListener('click', () => {
-            const currentLang = document.documentElement.lang || 'en';
-            const newLang = currentLang === 'el' ? 'en' : 'el';
-            translatePage(newLang);
+        langSelect.addEventListener('change', () => {
+            translatePage(langSelect.value);
         });
 
         function translatePage(lang) {
             document.documentElement.lang = lang === 'el' ? 'el' : 'en';
             document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.id === 'langSelect') return;
                 el.textContent = el.getAttribute(`data-${lang}`);
             });
             localStorage.setItem('lang', lang);
-            updateLangButton();
+            updateLangSelect();
             updateA11yButtonTexts();
             updateFloatingButtonTitles();
             if (isSpeaking) {

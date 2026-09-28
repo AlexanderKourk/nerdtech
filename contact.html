@@ -336,7 +336,7 @@
             <input id="name" type="text" name="name" data-en-placeholder="Your full name" data-el-placeholder="Το ονοματεπώνυμό σας" placeholder="Your full name" pattern="[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώπσςφγηξκλθχψωβνεμρτυοιαε\s]+" required>
             <div class="name-error" id="nameError" data-en="Name must contain only letters and spaces" data-el="Το όνομα πρέπει να περιέχει μόνο γράμματα και κενά">Name must contain only letters and spaces</div>
 
-            <label for="phone" data-en="Phone Number" data-el="Αριθμός Τηλεφώνου">Phone Number</label>
+          <label for="phone" data-en="Phone Number" data-el="Αριθμός Τηλεφώνου">Phone Number</label>
             <div class="phone-group">
                 <select id="countryCode" name="countryCode" required>
                     <option value="+30">🇬🇷 +30</option>
@@ -380,7 +380,6 @@
                 <option value="Building a Computer from Scratch" data-en="🖥 Building a Computer from Scratch" data-el="🖥 Στήσιμο Υπολογιστή από το 0">🖥 Building a Computer from Scratch</option>
                 <option value="Activation of Office/Windows" data-en="🔒 Activation of Office/Windows" data-el="🔒 Ενεργοποίηση Office/Windows">🔒 Activation of Office/Windows</option>
                 <option value="System Compatibility Recommendations" data-en="📝 System Compatibility Recommendations" data-el="📝 Προτάσεις Συμβατότητας Συστημάτων">📝 System Compatibility Recommendations</option>
-                <option value="Computer Systems Security" data-en="🛡️ Computer Systems Security" data-el="🛡️ Ασφάλεια Υπολογιστικών Συστημάτων">🛡️ Computer Systems Security</option>
                 <option value="Expression of Interest" data-en="📋 Expression of Interest" data-el="📋 Εκδήλωση Ενδιαφέροντος">📋 Expression of Interest</option>
             </select>
 
@@ -757,6 +756,7 @@
             }
             const formData = new FormData(contactForm);
             formData.set('phone', formData.get('countryCode') + formData.get('phone'));
+            formData.delete('countryCode');
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
